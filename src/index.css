@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root{
+
+    --background:#FFF8F2;
+
+    --surface:#FFFFFF;
+
+    --primary:#785900;
+
+    --primary-light:#FFC107;
+
+    --secondary:#8F4E00;
+
+    --text:#201B11;
+
+    --border:#D4C5AB;
+
+}
+
+body{
+
+    margin:0;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    font-family:'Inter',sans-serif;
+
+}
+
+h1,h2,h3,h4,h5{
+
+    font-family:'Montserrat',sans-serif;
+
+}
