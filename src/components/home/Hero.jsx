@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo/logo.jpeg";
 
 function Hero() {
   return (
@@ -10,19 +11,29 @@ function Hero() {
           {/* Left Side */}
           <div>
 
-            <span className="inline-block bg-amber-100 text-[#785900] px-4 py-2 rounded-full text-sm font-semibold mb-6">
-              🥚 Farm Fresh Every Day
-            </span>
+            {/* <div className="inline-flex items-center gap-3 bg-amber-100 text-[#785900] px-5 py-2 rounded-full mb-6">
+
+                <img
+                    src={logo}
+                    alt="DELI EGGS Logo"
+                    className="w-6 h-6 object-contain"
+                />
+
+                <span className="text-sm font-semibold">
+                    Farm Fresh Every Day
+                </span>
+
+            </div> */}
 
             <h1
               className="text-5xl lg:text-7xl font-bold leading-tight text-[#201B11]"
               style={{ fontFamily: "Montserrat" }}
             >
-              Fresh Eggs
+              Where your
               <br />
-              Delivered
+              breakfast 
               <br />
-              To Your Door.
+              starts
             </h1>
 
             <p className="mt-8 text-lg text-gray-600 max-w-xl leading-8">

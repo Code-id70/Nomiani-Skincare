@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ShoppingBasket, Menu } from "lucide-react";
 import { useCart } from "../../context/CartContext";
+import logo from "../../assets/logo/logo.jpeg";
 
 function Navbar() {
   const { cartCount } = useCart();
@@ -11,9 +12,11 @@ function Navbar() {
 
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <div className="w-14 h-14 rounded-full bg-[#785900] flex items-center justify-center text-white font-bold text-xs">
-            LOGO
-          </div>
+          <img
+            src={logo}
+            alt="DELI EGGS"
+            className="h-20 w-auto"
+          />
         </Link>
 
         {/* Desktop Navigation */}
