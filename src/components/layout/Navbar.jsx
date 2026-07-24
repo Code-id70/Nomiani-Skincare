@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ShoppingBasket, Menu } from "lucide-react";
 import { useCart } from "../../context/CartContext";
-import logo from "../../assets/logo/logo.jpeg";
+import logo from "../../assets/logo/logo.png";
 import { useState } from "react";
 import MobileMenu from "./MobileMenu";
 
