@@ -2,11 +2,15 @@ import { Link } from "react-router-dom";
 import { ShoppingBasket, Menu } from "lucide-react";
 import { useCart } from "../../context/CartContext";
 import logo from "../../assets/logo/logo.jpeg";
+import { useState } from "react";
+import MobileMenu from "./MobileMenu";
 
 function Navbar() {
   const { cartCount } = useCart();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
+    <>
     <header className="sticky top-0 z-50 bg-[#FFF8F2]/90 backdrop-blur-md border-b border-[#D4C5AB]">
       <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
 
@@ -72,15 +76,27 @@ function Navbar() {
           </Link>
 
           {/* Mobile Menu Button */}
-          <button className="lg:hidden">
-            <Menu className="text-[#785900]" />
+         <button
+            onClick={() => setIsMenuOpen(true)}
+            className="lg:hidden"
+          >
+            <Menu
+              size={28}
+              className="text-[#785900]"
+            />
           </button>
 
         </div>
 
       </div>
     </header>
-  );
+
+    <MobileMenu
+      isOpen={isMenuOpen}
+      onClose={() => setIsMenuOpen(false)}
+    />
+  </>
+);
 }
 
 export default Navbar;
