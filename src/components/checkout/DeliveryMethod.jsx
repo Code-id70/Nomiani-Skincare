@@ -16,30 +16,6 @@ function DeliveryMethod({
 
         {/* Collection */}
 
-        <label className="flex items-start gap-4 p-5 border rounded-2xl cursor-pointer hover:border-[#785900] transition">
-
-          <input
-            type="radio"
-            name="deliveryMethod"
-            value="collection"
-            checked={deliveryMethod === "collection"}
-            onChange={(e) => setDeliveryMethod(e.target.value)}
-            className="mt-1"
-          />
-
-          <div>
-
-            <h3 className="font-semibold text-lg">
-              Collection
-            </h3>
-
-            <p className="text-gray-500 mt-1">
-              Collect your order from our collection point at no extra cost.
-            </p>
-
-          </div>
-
-        </label>
 
         {/* Delivery */}
 

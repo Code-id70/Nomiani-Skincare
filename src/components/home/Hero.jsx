@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 function Hero() {
   return (
     <section className="bg-[#FFF8F2]">
-      <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
+      <div className="max-w-7xl mx-auto px-6 py-3   lg:py-28">
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
 
           {/* Left Side */}
           <div>

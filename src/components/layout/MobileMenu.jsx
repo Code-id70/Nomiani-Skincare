@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { X, Home, ShoppingBag, Info, Phone, ShoppingBasket } from "lucide-react";
 import { useCart } from "../../context/CartContext";
-
+import logo from "../../assets/logo/logo.png";
 function MobileMenu({ isOpen, onClose }) {
   const { cartCount } = useCart();
 
@@ -26,13 +26,15 @@ function MobileMenu({ isOpen, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 h-20 border-b">
 
-          <h2
-            className="text-2xl font-bold text-[#785900]"
-            style={{ fontFamily: "Montserrat" }}
-          >
-            DELI EGGS
-          </h2>
-
+          {/* Logo */}
+                  <Link to="/" className="flex items-center">
+                    <img
+                      src={logo}
+                      alt="DELI EGGS"
+                      className="h-20 w-auto"
+                    />
+                  </Link>
+          
           <button onClick={onClose}>
             <X className="text-[#785900]" />
           </button>

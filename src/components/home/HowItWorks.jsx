@@ -32,7 +32,7 @@ function HowItWorks() {
         <div className="text-center mb-16">
 
           <span className="uppercase tracking-widest text-[#785900] font-semibold">
-            How It Works
+            How To Order
           </span>
 
           <h2
