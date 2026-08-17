@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import MainMenu from "../components/layout/MainMenu";
 
@@ -9,6 +10,8 @@ import OrderNotes from "../components/checkout/OrderNotes";
 import OrderSummary from "../components/checkout/OrderSummary";
 
 function Checkout() {
+  const navigate = useNavigate();
+
   const [deliveryMethod, setDeliveryMethod] = useState("collection");
 
   const [formData, setFormData] = useState({
@@ -38,7 +41,13 @@ function Checkout() {
       deliveryMethod,
     });
 
-    alert("Order functionality coming next 🚀");
+    // Move to payment method selection
+    navigate("/payment-method", {
+      state: {
+        customer: formData,
+        deliveryMethod,
+      },
+    });
   };
 
   return (

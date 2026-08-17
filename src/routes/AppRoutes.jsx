@@ -7,11 +7,16 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
+import PaymentMethod from "../pages/PaymentMethod";
+import Payment from "../pages/Payment";
+import OrderConfirmation from "../pages/OrderConfirmation";
+
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminCustomers from "../pages/admin/AdminCustomers";
 import AdminAnalytics from "../pages/admin/AdminAnalytics";
 import AdminSettings from "../pages/admin/AdminSettings";
+
 
 // Admin
 import AdminLogin from "../pages/admin/AdminLogin";
@@ -43,6 +48,9 @@ function AppRoutes() {
 
         <Route path="/contact" element={<Contact />} />
 
+        <Route path="/payment-method" element={<PaymentMethod />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
 
         {/* =========================
             ADMIN
