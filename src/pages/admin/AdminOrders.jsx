@@ -12,7 +12,6 @@ import {
   CreditCard,
 } from "lucide-react";
 
-import AdminLayout from "../../components/admin/AdminLayout";
 import { getAdminOrders } from "../../services/dashboardService";
 
 function AdminOrders() {
@@ -98,8 +97,7 @@ function AdminOrders() {
   });
 
   return (
-    <AdminLayout>
-
+    <>
       {/* Page Header */}
       <div className="mb-8">
 
@@ -465,7 +463,7 @@ function AdminOrders() {
 
       </div>
 
-    </AdminLayout>
+    </>
   );
 }
 

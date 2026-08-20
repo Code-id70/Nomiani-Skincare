@@ -15,6 +15,8 @@ urlpatterns = [
     path('api/orders/', include('orders.urls')),
     # Admin order endpoints
     path('api/admin/orders/', include('orders.urls')),
+    # Payments endpoints
+    path('api/payments/', include('payments.urls')),
     # Admin customer endpoints
     path('api/admin/customers/', include('customers.urls')),
     # Admin dashboard endpoints

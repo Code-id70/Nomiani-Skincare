@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   ShoppingCart,
@@ -12,6 +12,14 @@ import {
 } from "lucide-react";
 
 function AdminSidebar({ open, onClose }) {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    navigate("/admin/login", { replace: true });
+  }
+
   const navigation = [
     {
       name: "Dashboard",
@@ -126,7 +134,7 @@ function AdminSidebar({ open, onClose }) {
         <button
           type="button"
           className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-600 transition"
-          onClick={onClose}
+          onClick={handleLogout}
         >
           <LogOut size={20} />
 

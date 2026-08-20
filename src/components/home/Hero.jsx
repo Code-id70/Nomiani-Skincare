@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
+import heroBg from "../../assets/images/background-cover.jpg"; // update path to your image
 // import logo from "../../assets/logo/logo.jpeg";
 
 function Hero() {
   return (
-    <section className="bg-[#FFF8F2]">
-      <div className="max-w-7xl mx-auto px-6 py-3   lg:py-28">
+    <section className="relative bg-[#FFF8F2] overflow-hidden">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center blur-xs opacity-80"
+        style={{ backgroundImage: `url(${heroBg})` }}
+      />
 
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-3 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
 
           {/* Left Side */}
@@ -17,7 +24,7 @@ function Hero() {
             >
               Where your
               <br />
-              breakfast 
+              breakfast
               <br />
               starts
             </h1>
@@ -38,6 +45,7 @@ function Hero() {
         </div>
 
       </div>
+
     </section>
   );
 }

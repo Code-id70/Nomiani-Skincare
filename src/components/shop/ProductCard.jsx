@@ -11,6 +11,7 @@ function ProductCard({ product }) {
         src={product.image}
         alt={product.name}
         className="h-64 w-full object-cover"
+        style={{ opacity: 0.65 }}
       />
 
       <div className="p-6">

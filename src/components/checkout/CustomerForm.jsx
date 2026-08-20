@@ -1,4 +1,9 @@
-function CustomerForm({ formData, handleChange }) {
+function CustomerForm({ formData, handleChange, errors = {} }) {
+  const inputClass = (field) =>
+    `w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900] ${
+      errors[field] ? "border-red-500" : ""
+    }`;
+
   return (
     <div className="bg-white rounded-3xl shadow-sm p-8">
 
@@ -11,7 +16,7 @@ function CustomerForm({ formData, handleChange }) {
 
       <div className="grid md:grid-cols-2 gap-6">
 
-        <div>
+        <div data-error={errors.firstName ? "true" : undefined}>
           <label className="block mb-2 font-medium">
             First Name *
           </label>
@@ -22,11 +27,14 @@ function CustomerForm({ formData, handleChange }) {
             value={formData.firstName}
             onChange={handleChange}
             placeholder="Livhuwani"
-            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+            className={inputClass("firstName")}
           />
+          {errors.firstName && (
+            <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
+          )}
         </div>
 
-        <div>
+        <div data-error={errors.lastName ? "true" : undefined}>
           <label className="block mb-2 font-medium">
             Last Name *
           </label>
@@ -37,11 +45,14 @@ function CustomerForm({ formData, handleChange }) {
             value={formData.lastName}
             onChange={handleChange}
             placeholder="Canly"
-            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+            className={inputClass("lastName")}
           />
+          {errors.lastName && (
+            <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
+          )}
         </div>
 
-        <div>
+        <div data-error={errors.phone ? "true" : undefined}>
           <label className="block mb-2 font-medium">
             Phone Number *
           </label>
@@ -52,8 +63,11 @@ function CustomerForm({ formData, handleChange }) {
             value={formData.phone}
             onChange={handleChange}
             placeholder="082 123 4567"
-            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+            className={inputClass("phone")}
           />
+          {errors.phone && (
+            <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+          )}
         </div>
 
         <div>

@@ -25,13 +25,6 @@ function AdminHeader({ onToggleSidebar }) {
             />
           </button>
 
-          <h1
-            className="text-xl font-bold text-[#785900]"
-            style={{ fontFamily: "Montserrat" }}
-          >
-            DELI EGGS
-          </h1>
-
         </div>
 
         {/* Desktop title */}

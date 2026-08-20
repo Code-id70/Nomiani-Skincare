@@ -11,7 +11,6 @@ import {
   X,
 } from "lucide-react";
 
-import AdminLayout from "../../components/admin/AdminLayout";
 import {
   getAdminProducts,
   updateProductStock,
@@ -241,8 +240,7 @@ function AdminProducts() {
   };
 
   return (
-    <AdminLayout>
-
+    <>
       {/* =========================================================
           PAGE HEADER
       ========================================================== */}
@@ -821,7 +819,7 @@ function AdminProducts() {
 
       )}
 
-    </AdminLayout>
+    </>
   );
 }
 

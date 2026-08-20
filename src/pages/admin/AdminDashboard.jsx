@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ShoppingCart,
   Truck,
@@ -10,36 +10,42 @@ import {
   Egg,
   MoreVertical,
   CalendarDays,
+  RefreshCw,
 } from "lucide-react";
 
-import AdminLayout from "../../components/admin/AdminLayout";
-import { getDashboardStats, getAdminProducts } from "../../services/dashboardService";
+import { getDashboardStats, getAdminProducts, getAdminOrders } from "../../services/dashboardService";
 
 function AdminDashboard() {
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
   const [stats, setStats] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
   const [lowStock, setLowStock] = useState([]);
+  const cancelledRef = useRef(false);
 
-  useEffect(() => {
-    let cancelled = false;
+  async function load() {
+    cancelledRef.current = false;
 
-    async function load() {
-      try {
-        setLoading(true);
-        setError("");
+    try {
+      setLoading(true);
+      setError("");
 
-        const [statsRes, productsRes] = await Promise.all([
-          getDashboardStats(),
-          getAdminProducts(),
-        ]);
+      const [statsRes, productsRes] = await Promise.all([
+        getDashboardStats(),
+        getAdminProducts(),
+      ]);
 
-        if (cancelled) return;
+      if (cancelledRef.current) return;
 
-        const data = statsRes.data;
+      const data = statsRes.data;
 
-        const formattedStats = [
+      const formattedStats = [
+          {
+            title: "Today's Orders",
+            value: data.today_orders?.toLocaleString() || "0",
+            icon: Truck,
+          },
           {
             title: "Total Orders",
             value: data.total_orders?.toLocaleString() || "0",
@@ -49,11 +55,6 @@ function AdminDashboard() {
                 : undefined,
             icon: ShoppingCart,
             positive: true,
-          },
-          {
-            title: "Today's Orders",
-            value: data.today_orders?.toLocaleString() || "0",
-            icon: Truck,
           },
           {
             title: "Revenue",
@@ -67,22 +68,6 @@ function AdminDashboard() {
           },
         ];
 
-        const formattedOrders = (data.recent_orders || []).map((order) => ({
-          id: order.order_number || order.id,
-          customer: order.customer_name || "Guest",
-          product: order.items?.length
-            ? order.items
-                .map(
-                  (item) =>
-                    `${item.product_name} x${item.quantity}`
-                )
-                .join(", ")
-            : "No items",
-          type: order.order_type === "DELIVERY" ? "Delivery" : "Collection",
-          total: `R${Number(order.total || 0).toLocaleString()}`,
-          status: order.order_status,
-        }));
-
         const lowStockProducts = (productsRes.data || [])
           .filter((p) => !p.in_stock || p.stock_quantity <= 0)
           .slice(0, 5)
@@ -92,30 +77,57 @@ function AdminDashboard() {
             stock: p.stock_quantity,
           }));
 
+        let recentOrders = [];
+        try {
+          const ordersRes = await getAdminOrders();
+          const ordersData = ordersRes.data || [];
+          recentOrders = ordersData.slice(0, 5).map((order) => ({
+            id: order.order_number || order.id,
+            customer: order.customer_name || "Guest",
+            product: order.items?.length
+              ? order.items
+                  .map(
+                    (item) =>
+                      `${item.product_name} x${item.quantity}`
+                  )
+                  .join(", ")
+              : "No items",
+            type: order.order_type === "DELIVERY" ? "Delivery" : "Collection",
+            total: `R${Number(order.total || 0).toLocaleString()}`,
+            status: order.order_status,
+          }));
+        } catch (ordersErr) {
+          console.error("Failed to load recent orders:", ordersErr);
+        }
+
         setStats(formattedStats);
-        setRecentOrders(formattedOrders);
+        setRecentOrders(recentOrders);
         setLowStock(lowStockProducts);
       } catch (err) {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setError(err.message || "Failed to load dashboard data.");
         }
       } finally {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setLoading(false);
+          setRefreshing(false);
         }
       }
     }
 
-    load();
+    useEffect(() => {
+      const raf = requestAnimationFrame(() => {
+        load();
+      });
 
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+      return () => {
+        cancelAnimationFrame(raf);
+        cancelledRef.current = true;
+      };
+    }, []);
 
   return (
-    <AdminLayout>
-
+    <>
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
 
@@ -132,13 +144,33 @@ function AdminDashboard() {
           </p>
         </div>
 
-        <button
-          type="button"
-          className="w-fit bg-white border border-[#D4C5AB] px-4 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium hover:bg-[#FFF8F2] transition"
-        >
-          <CalendarDays size={18} />
-          Today
-        </button>
+        <div className="flex items-center gap-3">
+
+          <button
+            type="button"
+            onClick={() => {
+              setRefreshing(true);
+              load();
+            }}
+            className="w-fit bg-white border border-[#D4C5AB] px-4 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium hover:bg-[#FFF8F2] transition disabled:opacity-60"
+            disabled={refreshing}
+          >
+            <RefreshCw
+              size={18}
+              className={refreshing ? "animate-spin" : ""}
+            />
+            {refreshing ? "Refreshing..." : "Refresh"}
+          </button>
+
+          <button
+            type="button"
+            className="w-fit bg-white border border-[#D4C5AB] px-4 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium hover:bg-[#FFF8F2] transition"
+          >
+            <CalendarDays size={18} />
+            Today
+          </button>
+
+        </div>
 
       </div>
 
@@ -428,7 +460,7 @@ function AdminDashboard() {
 
       </div>
 
-    </AdminLayout>
+    </>
   );
 }
 

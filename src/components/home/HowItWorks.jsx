@@ -42,11 +42,6 @@ function HowItWorks() {
             Ordering Fresh Eggs Is Easy
           </h2>
 
-          <p className="mt-5 text-gray-600 max-w-2xl mx-auto">
-            Place your order in just a few simple steps and enjoy farm-fresh
-            eggs delivered with care.
-          </p>
-
         </div>
 
         <div className="grid gap-10 md:grid-cols-3">

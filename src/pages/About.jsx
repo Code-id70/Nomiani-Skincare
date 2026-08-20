@@ -1,6 +1,7 @@
 import MainMenu from "../components/layout/MainMenu";
 import { Egg, Truck, BadgeDollarSign, ShieldCheck, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import deliMan from "../assets/images/deli-man.png"; // adjust the relative path to match this file's location
 
 function About() {
   return (
@@ -37,11 +38,14 @@ function About() {
 
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
-          <div className="bg-amber-50 rounded-3xl h-[450px] flex items-center justify-center">
-            <span className="text-gray-400 text-xl">
-              Business Image
-            </span>
-          </div>
+          <div className="bg-amber-50 rounded-3xl h-[450px] flex items-center justify-center overflow-hidden">
+          <img
+            src={deliMan}
+            alt="Deli Eggs business"
+            className="w-full h-full object-cover"
+            style={{ objectPosition: "center 35%" }}
+          />
+        </div>
 
           <div>
 

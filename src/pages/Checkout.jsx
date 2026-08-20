@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import MainMenu from "../components/layout/MainMenu";
@@ -12,7 +12,7 @@ import OrderSummary from "../components/checkout/OrderSummary";
 function Checkout() {
   const navigate = useNavigate();
 
-  const [deliveryMethod, setDeliveryMethod] = useState("collection");
+  const [deliveryMethod, setDeliveryMethod] = useState("");
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -28,6 +28,36 @@ function Checkout() {
     notes: "",
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+
+    if (!deliveryMethod) newErrors.deliveryMethod = "Please select a delivery method";
+
+    if (deliveryMethod === "delivery") {
+      if (!formData.street.trim()) newErrors.street = "Street address is required";
+      if (!formData.suburb.trim()) newErrors.suburb = "Suburb is required";
+      if (!formData.city.trim()) newErrors.city = "City is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const firstError = document.querySelector("[data-error]");
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }, [errors]);
+
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -36,12 +66,13 @@ function Checkout() {
   };
 
   const handlePlaceOrder = () => {
+    if (!validate()) return;
+
     console.log({
       customer: formData,
       deliveryMethod,
     });
 
-    // Move to payment method selection
     navigate("/payment-method", {
       state: {
         customer: formData,
@@ -80,11 +111,13 @@ function Checkout() {
             <CustomerForm
               formData={formData}
               handleChange={handleChange}
+              errors={errors}
             />
 
             <DeliveryMethod
               deliveryMethod={deliveryMethod}
               setDeliveryMethod={setDeliveryMethod}
+              errors={errors}
             />
 
             {/* Collection */}
@@ -147,6 +180,7 @@ function Checkout() {
               <AddressForm
                 formData={formData}
                 handleChange={handleChange}
+                errors={errors}
               />
 
             )}

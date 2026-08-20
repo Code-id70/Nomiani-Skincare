@@ -10,6 +10,8 @@ import Contact from "../pages/Contact";
 import PaymentMethod from "../pages/PaymentMethod";
 import Payment from "../pages/Payment";
 import OrderConfirmation from "../pages/OrderConfirmation";
+import PaymentSuccess from "../pages/PaymentSuccess";
+import PaymentCancelled from "../pages/PaymentCancelled";
 
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminProducts from "../pages/admin/AdminProducts";
@@ -21,6 +23,8 @@ import AdminSettings from "../pages/admin/AdminSettings";
 // Admin
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminLayout from "../components/admin/AdminLayout";
+import ProtectedRoute from "../components/admin/ProtectedRoute";
 
 function AppRoutes() {
   return (
@@ -50,6 +54,8 @@ function AppRoutes() {
 
         <Route path="/payment-method" element={<PaymentMethod />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-cancelled" element={<PaymentCancelled />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
 
         {/* =========================
@@ -63,32 +69,68 @@ function AppRoutes() {
 
         <Route
           path="/admin"
-          element={<AdminDashboard />}
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminDashboard />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/admin/orders"
-          element={<AdminOrders />}
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminOrders />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/admin/products"
-          element={<AdminProducts />}
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminProducts />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/admin/customers"
-          element={<AdminCustomers />}
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminCustomers />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/admin/analytics"
-          element={<AdminAnalytics />}
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminAnalytics />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/admin/settings"
-          element={<AdminSettings />}
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminSettings />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
         />
 
       </Routes>

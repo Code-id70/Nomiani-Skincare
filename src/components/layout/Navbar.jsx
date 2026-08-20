@@ -5,13 +5,13 @@ import logo from "../../assets/logo/logo.png";
 import { useState } from "react";
 import MobileMenu from "./MobileMenu";
 
-function Navbar() {
+function Navbar({ heroImage }) {
   const { cartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
-    <header className="sticky top-0 z-50 bg-[#FFF8F2]/90 backdrop-blur-md border-b border-[#D4C5AB]">
+    <header className={`sticky top-0 z-50 border-b border-[#D4C5AB] ${heroImage ? "bg-[#FFF8F2]/60" : "bg-[#FFF8F2]/90 backdrop-blur-md"}`}>
       <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
 
         {/* Logo */}

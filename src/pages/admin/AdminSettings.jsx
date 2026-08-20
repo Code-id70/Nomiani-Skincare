@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Settings,
   Store,
   Truck,
   MapPin,
@@ -11,8 +10,6 @@ import {
   Bell,
   ShieldCheck,
 } from "lucide-react";
-
-import AdminLayout from "../../components/admin/AdminLayout";
 
 function AdminSettings() {
   const [activeSection, setActiveSection] = useState("business");
@@ -66,8 +63,7 @@ function AdminSettings() {
   };
 
   return (
-    <AdminLayout>
-
+    <>
       {/* =========================================================
           PAGE HEADER
       ========================================================== */}
@@ -546,7 +542,7 @@ function AdminSettings() {
 
       </div>
 
-    </AdminLayout>
+    </>
   );
 }
 

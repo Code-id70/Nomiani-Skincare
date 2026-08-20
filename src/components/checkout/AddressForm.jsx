@@ -1,4 +1,9 @@
-function AddressForm({ formData, handleChange }) {
+function AddressForm({ formData, handleChange, errors = {} }) {
+  const inputClass = (field) =>
+    `w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900] ${
+      errors[field] ? "border-red-500" : ""
+    }`;
+
   return (
     <div className="bg-white rounded-3xl shadow-sm p-8 mt-8">
 
@@ -12,7 +17,7 @@ function AddressForm({ formData, handleChange }) {
       <div className="grid gap-6">
 
         {/* Street Address */}
-        <div>
+        <div data-error={errors.street ? "true" : undefined}>
           <label className="block mb-2 font-medium">
             Street Address *
           </label>
@@ -23,14 +28,17 @@ function AddressForm({ formData, handleChange }) {
             value={formData.street}
             onChange={handleChange}
             placeholder="123 Main Street"
-            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+            className={inputClass("street")}
           />
+          {errors.street && (
+            <p className="text-red-500 text-sm mt-1">{errors.street}</p>
+          )}
         </div>
 
         {/* Suburb & City */}
         <div className="grid md:grid-cols-2 gap-6">
 
-          <div>
+          <div data-error={errors.suburb ? "true" : undefined}>
             <label className="block mb-2 font-medium">
               Suburb *
             </label>
@@ -41,11 +49,14 @@ function AddressForm({ formData, handleChange }) {
               value={formData.suburb}
               onChange={handleChange}
               placeholder="Mamelodi East"
-              className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+              className={inputClass("suburb")}
             />
+            {errors.suburb && (
+              <p className="text-red-500 text-sm mt-1">{errors.suburb}</p>
+            )}
           </div>
 
-          <div>
+          <div data-error={errors.city ? "true" : undefined}>
             <label className="block mb-2 font-medium">
               City *
             </label>
@@ -56,8 +67,11 @@ function AddressForm({ formData, handleChange }) {
               value={formData.city}
               onChange={handleChange}
               placeholder="Pretoria"
-              className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+              className={inputClass("city")}
             />
+            {errors.city && (
+              <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+            )}
           </div>
 
         </div>

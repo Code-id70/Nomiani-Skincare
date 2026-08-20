@@ -6,7 +6,7 @@ import CTA from "../components/home/CTA";
 
 function Home() {
   return (
-    <MainLayout>
+    <MainLayout heroImage="/background-cover.jpg">
       <Hero />
        <FeaturedProducts />
         <HowItWorks />

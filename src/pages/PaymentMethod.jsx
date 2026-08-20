@@ -1,10 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { CreditCard, Landmark, Smartphone, Banknote, ArrowLeft, ShieldCheck } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 function PaymentMethod() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { cartItems } = useCart();
+
+  const customer = location.state?.customer;
+  const deliveryMethod = location.state?.deliveryMethod;
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.quantity * item.price,
@@ -16,11 +20,12 @@ function PaymentMethod() {
   const total = subtotal + deliveryFee;
 
   const handlePaymentMethod = (method) => {
-    // UI only for now
     navigate("/payment", {
       state: {
         paymentMethod: method,
         total,
+        customer,
+        deliveryMethod,
       },
     });
   };

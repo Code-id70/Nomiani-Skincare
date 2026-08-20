@@ -11,8 +11,6 @@ import {
   MapPin,
 } from "lucide-react";
 
-import AdminLayout from "../../components/admin/AdminLayout";
-
 function AdminCustomers() {
   const [customers] = useState([
     {
@@ -110,8 +108,7 @@ function AdminCustomers() {
   ).length;
 
   return (
-    <AdminLayout>
-
+    <>
       {/* =========================================================
           PAGE HEADER
       ========================================================== */}
@@ -562,8 +559,7 @@ function AdminCustomers() {
 
         </div>
       )}
-
-    </AdminLayout>
+    </>
   );
 }
 

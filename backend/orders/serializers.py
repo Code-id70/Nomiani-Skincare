@@ -41,6 +41,8 @@ class OrderCreateSerializer(serializers.Serializer):
     delivery_distance = serializers.DecimalField(max_digits=6, decimal_places=2, required=False, allow_null=True)
     items = serializers.ListField(child=serializers.DictField(), allow_empty=False)
     notes = serializers.CharField(required=False, allow_blank=True)
+    payment_method = serializers.CharField(required=False, allow_blank=True)
+    payment_reference = serializers.CharField(required=False, allow_blank=True)
 
     def validate(self, attrs):
         if attrs.get('order_type') == 'DELIVERY' and not attrs.get('delivery_address'):

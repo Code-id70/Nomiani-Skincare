@@ -10,7 +10,6 @@ import {
   CalendarDays,
 } from "lucide-react";
 
-import AdminLayout from "../../components/admin/AdminLayout";
 import { getAnalytics } from "../../services/dashboardService";
 
 function AdminAnalytics() {
@@ -125,8 +124,7 @@ function AdminAnalytics() {
   );
 
   return (
-    <AdminLayout>
-
+    <>
       {/* =========================================================
           HEADER
       ========================================================== */}
@@ -634,7 +632,7 @@ function AdminAnalytics() {
 
       </div>
 
-    </AdminLayout>
+    </>
   );
 }
 

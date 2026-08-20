@@ -87,13 +87,19 @@ class OrderViewSet(BaseViewSet):
             delivery_fee = max(float(rate) * float(distance), float(min_fee))
 
         # Create order
+        payment_status = 'PENDING'
+        if data.get('payment_method') in ['Card', 'Instant EFT']:
+            payment_status = 'PAID'
+
         order = Order.objects.create(
             customer=customer,
             order_type=data['order_type'],
             delivery_address=data.get('delivery_address', ''),
             delivery_distance=data.get('delivery_distance'),
             delivery_fee=delivery_fee,
-            payment_status='PENDING',
+            payment_status=payment_status,
+            payment_reference=data.get('payment_reference', ''),
+            payment_method=data.get('payment_method', ''),
             notes=data.get('notes', ''),
         )
 

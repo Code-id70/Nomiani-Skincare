@@ -1,7 +1,11 @@
 function DeliveryMethod({
   deliveryMethod,
   setDeliveryMethod,
+  errors = {},
 }) {
+  const inputClass = () =>
+    `mt-1 ${errors.deliveryMethod ? "border-red-500" : ""}`;
+
   return (
     <div className="bg-white rounded-3xl shadow-sm p-8 mt-8">
 
@@ -16,6 +20,30 @@ function DeliveryMethod({
 
         {/* Collection */}
 
+        <label className="flex items-start gap-4 p-5 border rounded-2xl cursor-pointer hover:border-[#785900] transition">
+
+          <input
+            type="radio"
+            name="deliveryMethod"
+            value="collection"
+            checked={deliveryMethod === "collection"}
+            onChange={(e) => setDeliveryMethod(e.target.value)}
+            className={inputClass("collection")}
+          />
+
+          <div>
+
+            <h3 className="font-semibold text-lg">
+              Collection
+            </h3>
+
+            <p className="text-gray-500 mt-1">
+              Collect your order from our store. Free.
+            </p>
+
+          </div>
+
+        </label>
 
         {/* Delivery */}
 
@@ -27,7 +55,7 @@ function DeliveryMethod({
             value="delivery"
             checked={deliveryMethod === "delivery"}
             onChange={(e) => setDeliveryMethod(e.target.value)}
-            className="mt-1"
+            className={inputClass("delivery")}
           />
 
           <div>
@@ -45,6 +73,10 @@ function DeliveryMethod({
         </label>
 
       </div>
+
+      {errors.deliveryMethod && (
+        <p className="text-red-500 text-sm mt-3">{errors.deliveryMethod}</p>
+      )}
 
     </div>
   );
