@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   ShoppingCart,
   Truck,
@@ -12,80 +13,105 @@ import {
 } from "lucide-react";
 
 import AdminLayout from "../../components/admin/AdminLayout";
+import { getDashboardStats, getAdminProducts } from "../../services/dashboardService";
 
 function AdminDashboard() {
-  const stats = [
-    {
-      title: "Total Orders",
-      value: "128",
-      change: "+12%",
-      icon: ShoppingCart,
-      positive: true,
-    },
-    {
-      title: "Today's Orders",
-      value: "24",
-      icon: Truck,
-    },
-    {
-      title: "Revenue",
-      value: "R12,450",
-      icon: CreditCard,
-    },
-    {
-      title: "Pending Orders",
-      value: "8",
-      icon: Clock,
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [stats, setStats] = useState([]);
+  const [recentOrders, setRecentOrders] = useState([]);
+  const [lowStock, setLowStock] = useState([]);
 
-  const recentOrders = [
-    {
-      id: "#DE1001",
-      customer: "Thabo Mokoena",
-      product: "Large Eggs x2",
-      type: "Delivery",
-      total: "R190",
-      status: "Pending",
-    },
-    {
-      id: "#DE1002",
-      customer: "Sarah Mokoena",
-      product: "Jumbo Eggs x1",
-      type: "Collection",
-      total: "R110",
-      status: "Completed",
-    },
-    {
-      id: "#DE1003",
-      customer: "James Nkosi",
-      product: "Large Eggs x1",
-      type: "Delivery",
-      total: "R95",
-      status: "Preparing",
-    },
-    {
-      id: "#DE1004",
-      customer: "Lerato Molefe",
-      product: "Jumbo Eggs x2",
-      type: "Delivery",
-      total: "R220",
-      status: "Confirmed",
-    },
-  ];
+  useEffect(() => {
+    let cancelled = false;
 
-  const lowStock = [
-    {
-      name: "Medium Eggs",
-      size: "30 Tray",
-      stock: 0,
-    },
-    {
-      name: "Half Tray",
-      size: "15 Eggs",
-      stock: 0,
-    },
-  ];
+    async function load() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const [statsRes, productsRes] = await Promise.all([
+          getDashboardStats(),
+          getAdminProducts(),
+        ]);
+
+        if (cancelled) return;
+
+        const data = statsRes.data;
+
+        const formattedStats = [
+          {
+            title: "Total Orders",
+            value: data.total_orders?.toLocaleString() || "0",
+            change:
+              data.today_orders > 0
+                ? `+${Math.round((data.today_orders / Math.max(data.total_orders, 1)) * 100)}%`
+                : undefined,
+            icon: ShoppingCart,
+            positive: true,
+          },
+          {
+            title: "Today's Orders",
+            value: data.today_orders?.toLocaleString() || "0",
+            icon: Truck,
+          },
+          {
+            title: "Revenue",
+            value: `R${(data.total_revenue || 0).toLocaleString()}`,
+            icon: CreditCard,
+          },
+          {
+            title: "Pending Orders",
+            value: data.pending_orders?.toLocaleString() || "0",
+            icon: Clock,
+          },
+        ];
+
+        const formattedOrders = (data.recent_orders || []).map((order) => ({
+          id: order.order_number || order.id,
+          customer: order.customer_name || "Guest",
+          product: order.items?.length
+            ? order.items
+                .map(
+                  (item) =>
+                    `${item.product_name} x${item.quantity}`
+                )
+                .join(", ")
+            : "No items",
+          type: order.order_type === "DELIVERY" ? "Delivery" : "Collection",
+          total: `R${Number(order.total || 0).toLocaleString()}`,
+          status: order.order_status,
+        }));
+
+        const lowStockProducts = (productsRes.data || [])
+          .filter((p) => !p.in_stock || p.stock_quantity <= 0)
+          .slice(0, 5)
+          .map((p) => ({
+            name: p.name,
+            size: p.size || "N/A",
+            stock: p.stock_quantity,
+          }));
+
+        setStats(formattedStats);
+        setRecentOrders(formattedOrders);
+        setLowStock(lowStockProducts);
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || "Failed to load dashboard data.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <AdminLayout>
@@ -116,44 +142,64 @@ function AdminDashboard() {
 
       </div>
 
+      {error && (
+        <div className="mb-6 p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm">
+          {error}
+        </div>
+      )}
+
       {/* Statistics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
 
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-
-          return (
-            <div
-              key={stat.title}
-              className="bg-white border border-[#D4C5AB] rounded-2xl p-6 shadow-[0_4px_20px_rgba(120,89,0,0.05)] hover:-translate-y-0.5 transition"
-            >
-
-              <div className="flex items-start justify-between mb-5">
-
-                <div className="w-11 h-11 rounded-xl bg-[#FDC003]/20 text-[#785900] flex items-center justify-center">
-                  <Icon size={21} />
+        {loading
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="bg-white border border-[#D4C5AB] rounded-2xl p-6 shadow-[0_4px_20px_rgba(120,89,0,0.05)] animate-pulse"
+              >
+                <div className="flex items-start justify-between mb-5">
+                  <div className="w-11 h-11 rounded-xl bg-[#F3EDE7]" />
+                  <div className="w-16 h-6 rounded-full bg-[#F3EDE7]" />
                 </div>
-
-                {stat.change && (
-                  <span className="text-xs font-semibold text-teal-700 bg-teal-50 px-2 py-1 rounded-full flex items-center gap-1">
-                    <TrendingUp size={13} />
-                    {stat.change}
-                  </span>
-                )}
-
+                <div className="w-24 h-4 rounded bg-[#F3EDE7] mb-2" />
+                <div className="w-16 h-8 rounded bg-[#F3EDE7]" />
               </div>
+            ))
+          : stats.map((stat) => {
+              const Icon = stat.icon;
 
-              <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
-                {stat.title}
-              </p>
+              return (
+                <div
+                  key={stat.title}
+                  className="bg-white border border-[#D4C5AB] rounded-2xl p-6 shadow-[0_4px_20px_rgba(120,89,0,0.05)] hover:-translate-y-0.5 transition"
+                >
 
-              <p className="text-3xl font-bold text-[#201B11]">
-                {stat.value}
-              </p>
+                  <div className="flex items-start justify-between mb-5">
 
-            </div>
-          );
-        })}
+                    <div className="w-11 h-11 rounded-xl bg-[#FDC003]/20 text-[#785900] flex items-center justify-center">
+                      <Icon size={21} />
+                    </div>
+
+                    {stat.change && (
+                      <span className="text-xs font-semibold text-teal-700 bg-teal-50 px-2 py-1 rounded-full flex items-center gap-1">
+                        <TrendingUp size={13} />
+                        {stat.change}
+                      </span>
+                    )}
+
+                  </div>
+
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
+                    {stat.title}
+                  </p>
+
+                  <p className="text-3xl font-bold text-[#201B11]">
+                    {stat.value}
+                  </p>
+
+                </div>
+              );
+            })}
 
       </div>
 
@@ -369,6 +415,12 @@ function AdminDashboard() {
               </div>
 
             ))}
+
+            {!loading && lowStock.length === 0 && (
+              <p className="text-sm text-gray-500 text-center py-6">
+                All products are in stock.
+              </p>
+            )}
 
           </div>
 

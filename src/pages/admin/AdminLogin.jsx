@@ -25,41 +25,32 @@ function AdminLogin() {
     setLoading(true);
 
     try {
-      /*
-        Django API connection will go here.
-
-        Example:
-
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/auth/login/`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-            }),
-          }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.detail || "Invalid email or password.");
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/auth/login/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: email,
+            password,
+          }),
         }
+      );
 
-        localStorage.setItem("accessToken", data.access);
-        localStorage.setItem("refreshToken", data.refresh);
+      const data = await response.json();
 
-        navigate("/admin");
-      */
+      if (!response.ok) {
+        throw new Error(
+          data.detail || data.message || "Invalid email or password."
+        );
+      }
 
-      // Temporary login while Django is being completed
-      setTimeout(() => {
-        navigate("/admin");
-      }, 700);
+      localStorage.setItem("accessToken", data.data.access);
+      localStorage.setItem("refreshToken", data.data.refresh);
+
+      navigate("/admin");
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -124,7 +115,7 @@ function AdminLogin() {
                 htmlFor="email"
                 className="block text-sm font-semibold text-gray-700 mb-2"
               >
-                Email Address
+                Username or Email
               </label>
 
               <div className="relative">
@@ -136,10 +127,10 @@ function AdminLogin() {
 
                 <input
                   id="email"
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@delieggs.co.za"
+                  placeholder="Enter your username or email"
                   autoComplete="email"
                   className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-200 bg-white outline-none transition focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
                 />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TrendingUp,
   ShoppingBag,
@@ -11,76 +11,118 @@ import {
 } from "lucide-react";
 
 import AdminLayout from "../../components/admin/AdminLayout";
+import { getAnalytics } from "../../services/dashboardService";
 
 function AdminAnalytics() {
-  const [period, setPeriod] = useState("7_days");
+  const [period, setPeriod] = useState("30_days");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [analytics, setAnalytics] = useState({
+    revenue: 0,
+    orders: 0,
+    customers: 0,
+    averageOrder: 0,
+    productsSold: 0,
+  });
+  const [revenueData, setRevenueData] = useState([]);
+  const [topProducts, setTopProducts] = useState([]);
+  const [orderStatus, setOrderStatus] = useState([]);
 
-  const analytics = {
-    revenue: 8450,
-    orders: 86,
-    customers: 42,
-    averageOrder: 98.26,
-    productsSold: 164,
-  };
+  useEffect(() => {
+    let cancelled = false;
 
-  const revenueData = [
-    { day: "Mon", value: 850 },
-    { day: "Tue", value: 1120 },
-    { day: "Wed", value: 760 },
-    { day: "Thu", value: 1340 },
-    { day: "Fri", value: 1580 },
-    { day: "Sat", value: 1710 },
-    { day: "Sun", value: 1090 },
-  ];
+    async function load() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const res = await getAnalytics(period);
+
+        if (cancelled) return;
+
+        const data = res.data || {};
+
+        const totalRevenue = data.revenue_by_day?.reduce((sum, day) => sum + (day.revenue || 0), 0) || 0;
+        const totalOrders = data.orders_by_day?.reduce((sum, day) => sum + (day.count || 0), 0) || 0;
+        const avgOrder = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+
+        setAnalytics({
+          revenue: totalRevenue,
+          orders: totalOrders,
+          customers: data.total_customers || 0,
+          averageOrder: avgOrder,
+          productsSold: data.best_selling_products?.reduce((sum, p) => sum + (p.total_quantity || 0), 0) || 0,
+        });
+
+        setRevenueData(
+          (data.revenue_by_day || []).map((day) => ({
+            day: new Date(day.date).toLocaleDateString("en-US", {
+              weekday: "short",
+            }),
+            value: day.revenue || 0,
+          }))
+        );
+
+        setTopProducts(
+          (data.best_selling_products || []).slice(0, 3).map((product) => ({
+            name: product.product_name,
+            units: product.total_quantity || 0,
+            revenue: product.total_revenue || 0,
+          }))
+        );
+
+        const deliveryCount = (data.delivery_vs_collection || []).find(
+          (item) => item.order_type === "DELIVERY"
+        )?.count || 0;
+
+        setOrderStatus([
+          {
+            name: "Completed",
+            count: 0,
+            percentage: 0,
+            className: "bg-emerald-500",
+          },
+          {
+            name: "Processing",
+            count: deliveryCount,
+            percentage: totalOrders > 0 ? Math.round((deliveryCount / totalOrders) * 100) : 0,
+            className: "bg-amber-500",
+          },
+          {
+            name: "Pending",
+            count: 0,
+            percentage: 0,
+            className: "bg-blue-500",
+          },
+          {
+            name: "Cancelled",
+            count: 0,
+            percentage: 0,
+            className: "bg-red-500",
+          },
+          ]);
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || "Failed to load analytics.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [period]);
 
   const maxRevenue = Math.max(
-    ...revenueData.map((item) => item.value)
+    ...revenueData.map((item) => item.value),
+    1
   );
-
-  const topProducts = [
-    {
-      name: "Large Eggs",
-      units: 82,
-      revenue: 7790,
-    },
-    {
-      name: "Jumbo Eggs",
-      units: 51,
-      revenue: 5610,
-    },
-    {
-      name: "Medium Eggs",
-      units: 31,
-      revenue: 2635,
-    },
-  ];
-
-  const orderStatus = [
-    {
-      name: "Completed",
-      count: 54,
-      percentage: 63,
-      className: "bg-emerald-500",
-    },
-    {
-      name: "Processing",
-      count: 18,
-      percentage: 21,
-      className: "bg-amber-500",
-    },
-    {
-      name: "Pending",
-      count: 9,
-      percentage: 10,
-      className: "bg-blue-500",
-    },
-    {
-      name: "Cancelled",
-      count: 5,
-      percentage: 6,
-      className: "bg-red-500",
-    },
-  ];
 
   return (
     <AdminLayout>
@@ -131,6 +173,12 @@ function AdminAnalytics() {
 
       </div>
 
+      {error && (
+        <div className="mb-6 p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm">
+          {error}
+        </div>
+      )}
+
 
       {/* =========================================================
           STAT CARDS
@@ -138,37 +186,49 @@ function AdminAnalytics() {
 
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-6 mb-6">
 
-        <AnalyticsStat
-          title="Revenue"
-          value={`R${analytics.revenue.toLocaleString()}`}
-          change="+12.5%"
-          positive
-          icon={DollarSign}
-        />
-
-        <AnalyticsStat
-          title="Orders"
-          value={analytics.orders}
-          change="+8.2%"
-          positive
-          icon={ShoppingBag}
-        />
-
-        <AnalyticsStat
-          title="Customers"
-          value={analytics.customers}
-          change="+6.4%"
-          positive
-          icon={Users}
-        />
-
-        <AnalyticsStat
-          title="Avg. Order Value"
-          value={`R${analytics.averageOrder.toFixed(2)}`}
-          change="-2.1%"
-          positive={false}
-          icon={TrendingUp}
-        />
+        {loading
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="bg-white border border-[#D4C5AB] rounded-xl p-5 lg:p-6 shadow-[0_4px_20px_rgba(120,89,0,0.05)] animate-pulse"
+              >
+                <div className="w-24 h-4 rounded bg-[#F3EDE7] mb-4" />
+                <div className="w-32 h-8 rounded bg-[#F3EDE7] mb-2" />
+                <div className="w-20 h-4 rounded bg-[#F3EDE7]" />
+              </div>
+            ))
+          : [
+              {
+                title: "Revenue",
+                value: `R${analytics.revenue.toLocaleString()}`,
+                change: "+12.5%",
+                positive: true,
+                icon: DollarSign,
+              },
+              {
+                title: "Orders",
+                value: analytics.orders.toLocaleString(),
+                change: "+8.2%",
+                positive: true,
+                icon: ShoppingBag,
+              },
+              {
+                title: "Customers",
+                value: analytics.customers.toLocaleString(),
+                change: "+6.4%",
+                positive: true,
+                icon: Users,
+              },
+              {
+                title: "Avg. Order Value",
+                value: `R${analytics.averageOrder.toFixed(2)}`,
+                change: "-2.1%",
+                positive: false,
+                icon: TrendingUp,
+              },
+            ].map((stat, i) => (
+              <AnalyticsStat key={i} {...stat} />
+            ))}
 
       </div>
 
@@ -211,41 +271,51 @@ function AdminAnalytics() {
 
         <div className="h-64 flex items-end gap-3 sm:gap-5">
 
-          {revenueData.map((item) => {
+          {loading
+            ? Array.from({ length: 7 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex-1 h-full flex flex-col justify-end items-center gap-3"
+                >
+                  <div className="w-full max-w-[52px] bg-[#F3EDE7] rounded-t-lg animate-pulse" style={{ height: `${((i * 17 + 40) % 60) + 30}%` }} />
+                  <div className="w-8 h-3 rounded bg-[#F3EDE7]" />
+                </div>
+              ))
+            : revenueData.map((item) => {
 
-            const height =
-              (item.value / maxRevenue) * 100;
+                const height =
+                  (item.value / maxRevenue) * 100;
 
-            return (
-              <div
-                key={item.day}
-                className="flex-1 h-full flex flex-col justify-end items-center gap-3"
-              >
-
-                <div className="relative w-full flex-1 flex items-end justify-center">
-
+                return (
                   <div
-                    className="w-full max-w-[52px] bg-[#785900] rounded-t-lg hover:bg-[#5B4200] transition-all cursor-pointer group relative"
-                    style={{
-                      height: `${height}%`,
-                    }}
+                    key={item.day}
+                    className="flex-1 h-full flex flex-col justify-end items-center gap-3"
                   >
 
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#201B11] text-white text-xs rounded-lg px-2 py-1 whitespace-nowrap">
-                      R{item.value.toLocaleString()}
+                    <div className="relative w-full flex-1 flex items-end justify-center">
+
+                      <div
+                        className="w-full max-w-[52px] bg-[#785900] rounded-t-lg hover:bg-[#5B4200] transition-all cursor-pointer group relative"
+                        style={{
+                          height: `${height}%`,
+                        }}
+                      >
+
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#201B11] text-white text-xs rounded-lg px-2 py-1 whitespace-nowrap">
+                          R{item.value.toLocaleString()}
+                        </div>
+
+                      </div>
+
                     </div>
 
+                    <span className="text-xs text-gray-500">
+                      {item.day}
+                    </span>
+
                   </div>
-
-                </div>
-
-                <span className="text-xs text-gray-500">
-                  {item.day}
-                </span>
-
-              </div>
-            );
-          })}
+                );
+              })}
 
         </div>
 
@@ -290,59 +360,66 @@ function AdminAnalytics() {
 
           <div className="space-y-5">
 
-            {topProducts.map((product, index) => {
+            {loading
+              ? Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <div className="w-32 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                    <div className="w-full h-2 rounded-full bg-[#F3EDE7] animate-pulse" />
+                  </div>
+                ))
+              : topProducts.map((product, index) => {
 
-              const maxUnits = topProducts[0].units;
+                  const maxUnits = topProducts[0]?.units || 1;
 
-              const percentage =
-                (product.units / maxUnits) * 100;
+                  const percentage =
+                    (product.units / maxUnits) * 100;
 
-              return (
-                <div key={product.name}>
+                  return (
+                    <div key={product.name}>
 
-                  <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center justify-between mb-2">
 
-                    <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3">
 
-                      <div className="w-8 h-8 rounded-lg bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-sm font-bold">
-                        {index + 1}
+                          <div className="w-8 h-8 rounded-lg bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-sm font-bold">
+                            {index + 1}
+                          </div>
+
+                          <div>
+
+                            <p className="font-semibold text-[#201B11] text-sm">
+                              {product.name}
+                            </p>
+
+                            <p className="text-xs text-gray-500">
+                              {product.units} units sold
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                        <span className="font-semibold text-[#785900] text-sm">
+                          R{product.revenue.toLocaleString()}
+                        </span>
+
                       </div>
 
-                      <div>
 
-                        <p className="font-semibold text-[#201B11] text-sm">
-                          {product.name}
-                        </p>
+                      <div className="h-2 bg-[#F3EDE7] rounded-full overflow-hidden">
 
-                        <p className="text-xs text-gray-500">
-                          {product.units} units sold
-                        </p>
+                        <div
+                          className="h-full bg-[#785900] rounded-full transition-all"
+                          style={{
+                            width: `${percentage}%`,
+                          }}
+                        />
 
                       </div>
 
                     </div>
-
-                    <span className="font-semibold text-[#785900] text-sm">
-                      R{product.revenue.toLocaleString()}
-                    </span>
-
-                  </div>
-
-
-                  <div className="h-2 bg-[#F3EDE7] rounded-full overflow-hidden">
-
-                    <div
-                      className="h-full bg-[#785900] rounded-full transition-all"
-                      style={{
-                        width: `${percentage}%`,
-                      }}
-                    />
-
-                  </div>
-
-                </div>
-              );
-            })}
+                  );
+                })}
 
           </div>
 
@@ -382,53 +459,60 @@ function AdminAnalytics() {
 
           <div className="space-y-5">
 
-            {orderStatus.map((status) => (
+            {loading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <div className="w-24 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                    <div className="w-full h-2 rounded-full bg-[#F3EDE7] animate-pulse" />
+                  </div>
+                ))
+              : orderStatus.map((status) => (
 
-              <div key={status.name}>
+                  <div key={status.name}>
 
-                <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between mb-2">
 
-                  <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
 
-                    <span
-                      className={`w-2.5 h-2.5 rounded-full ${status.className}`}
-                    />
+                        <span
+                          className={`w-2.5 h-2.5 rounded-full ${status.className}`}
+                        />
 
-                    <span className="text-sm font-medium text-[#201B11]">
-                      {status.name}
-                    </span>
+                        <span className="text-sm font-medium text-[#201B11]">
+                          {status.name}
+                        </span>
+
+                      </div>
+
+                      <div className="flex items-center gap-3">
+
+                        <span className="text-sm font-semibold">
+                          {status.count}
+                        </span>
+
+                        <span className="text-xs text-gray-500">
+                          {status.percentage}%
+                        </span>
+
+                      </div>
+
+                    </div>
+
+
+                    <div className="h-2 bg-[#F3EDE7] rounded-full overflow-hidden">
+
+                      <div
+                        className={`h-full rounded-full ${status.className}`}
+                        style={{
+                          width: `${status.percentage}%`,
+                        }}
+                      />
+
+                    </div>
 
                   </div>
 
-                  <div className="flex items-center gap-3">
-
-                    <span className="text-sm font-semibold">
-                      {status.count}
-                    </span>
-
-                    <span className="text-xs text-gray-500">
-                      {status.percentage}%
-                    </span>
-
-                  </div>
-
-                </div>
-
-
-                <div className="h-2 bg-[#F3EDE7] rounded-full overflow-hidden">
-
-                  <div
-                    className={`h-full rounded-full ${status.className}`}
-                    style={{
-                      width: `${status.percentage}%`,
-                    }}
-                  />
-
-                </div>
-
-              </div>
-
-            ))}
+                ))}
 
           </div>
 
@@ -489,41 +573,58 @@ function AdminAnalytics() {
 
             <tbody>
 
-              {topProducts.map((product) => (
+              {loading
+                ? Array.from({ length: 3 }).map((_, i) => (
+                    <tr key={i} className="border-b border-[#D4C5AB]/50">
+                      <td className="px-5 py-4">
+                        <div className="w-32 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-5 py-4">
+                        <div className="w-12 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-5 py-4">
+                        <div className="w-20 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-5 py-4">
+                        <div className="w-24 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                    </tr>
+                  ))
+                : topProducts.map((product) => (
 
-                <tr
-                  key={product.name}
-                  className="border-b border-[#D4C5AB]/50 hover:bg-[#FFF8F2] transition"
-                >
+                    <tr
+                      key={product.name}
+                      className="border-b border-[#D4C5AB]/50 hover:bg-[#FFF8F2] transition"
+                    >
 
-                  <td className="px-5 py-4 font-semibold text-[#201B11]">
-                    {product.name}
-                  </td>
+                      <td className="px-5 py-4 font-semibold text-[#201B11]">
+                        {product.name}
+                      </td>
 
-                  <td className="px-5 py-4 text-sm text-gray-600">
-                    {product.units}
-                  </td>
+                      <td className="px-5 py-4 text-sm text-gray-600">
+                        {product.units}
+                      </td>
 
-                  <td className="px-5 py-4 font-semibold text-[#785900]">
-                    R{product.revenue.toLocaleString()}
-                  </td>
+                      <td className="px-5 py-4 font-semibold text-[#785900]">
+                        R{product.revenue.toLocaleString()}
+                      </td>
 
-                  <td className="px-5 py-4">
+                      <td className="px-5 py-4">
 
-                    <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
 
-                      <span className="text-emerald-600 text-sm font-semibold flex items-center gap-1">
-                        <ArrowUpRight size={15} />
-                        Strong
-                      </span>
+                          <span className="text-emerald-600 text-sm font-semibold flex items-center gap-1">
+                            <ArrowUpRight size={15} />
+                            Strong
+                          </span>
 
-                    </div>
+                        </div>
 
-                  </td>
+                      </td>
 
-                </tr>
+                    </tr>
 
-              ))}
+                  ))}
 
             </tbody>
 

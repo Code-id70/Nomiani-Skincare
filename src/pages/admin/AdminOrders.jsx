@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Receipt,
   Clock3,
   Truck,
   CheckCircle2,
-//   Filter,
-//   CalendarDays,
   Download,
   MoreVertical,
   ChevronLeft,
@@ -15,69 +13,76 @@ import {
 } from "lucide-react";
 
 import AdminLayout from "../../components/admin/AdminLayout";
+import { getAdminOrders } from "../../services/dashboardService";
 
 function AdminOrders() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [dateFilter, setDateFilter] = useState("Last 30 Days");
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [orders, setOrders] = useState([]);
 
-  const orders = [
-    {
-      id: "#DELI-092",
-      customer: "Eleanor Shellstrop",
-      initials: "ES",
-      items: 2,
-      type: "Delivery",
-      total: 190,
-      payment: "Paid",
-      status: "Pending",
-      date: "Today, 10:42 AM",
-    },
-    {
-      id: "#DELI-091",
-      customer: "Jason Mendoza",
-      initials: "JM",
-      items: 5,
-      type: "Collection",
-      total: 142,
-      payment: "Paid",
-      status: "In Progress",
-      date: "Today, 09:15 AM",
-    },
-    {
-      id: "#DELI-090",
-      customer: "Tahani Al-Jamil",
-      initials: "TA",
-      items: 1,
-      type: "Delivery",
-      total: 95,
-      payment: "Paid",
-      status: "Completed",
-      date: "Yesterday, 04:30 PM",
-    },
-    {
-      id: "#DELI-089",
-      customer: "Chidi Anagonye",
-      initials: "CA",
-      items: 3,
-      type: "Delivery",
-      total: 285,
-      payment: "Failed",
-      status: "Cancelled",
-      date: "Yesterday, 02:10 PM",
-    },
-    {
-      id: "#DELI-088",
-      customer: "Thabo Mokoena",
-      initials: "TM",
-      items: 2,
-      type: "Collection",
-      total: 220,
-      payment: "Paid",
-      status: "Completed",
-      date: "Yesterday, 12:45 PM",
-    },
-  ];
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const params = {};
+        if (statusFilter !== "All") {
+          params.order_status = statusFilter.toUpperCase();
+        }
+
+        const res = await getAdminOrders(params);
+
+        if (cancelled) return;
+
+        const data = res.data || [];
+        const mapped = data.map((order) => ({
+          id: order.order_number || order.id,
+          customer: order.customer_name || "Guest",
+          initials: order.customer_name
+            ? order.customer_name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase()
+            : "G",
+          items: order.items?.length || 0,
+          type: order.order_type === "DELIVERY" ? "Delivery" : "Collection",
+          total: Number(order.total || 0),
+          payment: order.payment_status || "Pending",
+          status: order.order_status,
+          date: new Date(order.created_at).toLocaleString("en-ZA", {
+            day: "numeric",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        }));
+
+        setOrders(mapped);
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || "Failed to load orders.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [statusFilter]);
 
   const filteredOrders = orders.filter((order) => {
     const matchesSearch =
@@ -86,6 +91,7 @@ function AdminOrders() {
 
     const matchesStatus =
       statusFilter === "All" ||
+      order.status === statusFilter.toUpperCase() ||
       order.status === statusFilter;
 
     return matchesSearch && matchesStatus;
@@ -115,7 +121,7 @@ function AdminOrders() {
 
         <OrderStatCard
           title="Total Orders"
-          value="1,248"
+          value={loading ? "..." : orders.length.toLocaleString()}
           change="12%"
           icon={Receipt}
           type="success"
@@ -123,7 +129,11 @@ function AdminOrders() {
 
         <OrderStatCard
           title="Pending"
-          value="42"
+          value={
+            loading
+              ? "..."
+              : orders.filter((o) => o.status === "PENDING").length
+          }
           subtitle="Needs review"
           icon={Clock3}
           type="warning"
@@ -131,7 +141,15 @@ function AdminOrders() {
 
         <OrderStatCard
           title="In Progress"
-          value="18"
+          value={
+            loading
+              ? "..."
+              : orders.filter((o) =>
+                  ["CONFIRMED", "PREPARING", "OUT_FOR_DELIVERY"].includes(
+                    o.status
+                  )
+                ).length
+          }
           subtitle="Out for delivery"
           icon={Truck}
           type="primary"
@@ -139,13 +157,23 @@ function AdminOrders() {
 
         <OrderStatCard
           title="Completed"
-          value="1,188"
+          value={
+            loading
+              ? "..."
+              : orders.filter((o) => o.status === "COMPLETED").length
+          }
           subtitle="This month"
           icon={CheckCircle2}
           type="success"
         />
 
       </div>
+
+      {error && (
+        <div className="mb-6 p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm">
+          {error}
+        </div>
+      )}
 
       {/* Toolbar */}
       <div className="bg-white border border-[#D4C5AB] rounded-xl p-4 mb-6 shadow-[0_4px_20px_rgba(120,89,0,0.05)]">
@@ -181,7 +209,8 @@ function AdminOrders() {
             >
               <option value="All">Status: All</option>
               <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Preparing">Preparing</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
@@ -240,91 +269,120 @@ function AdminOrders() {
 
             <tbody>
 
-              {filteredOrders.map((order) => (
+              {loading
+                ? Array.from({ length: 5 }).map((_, i) => (
+                    <tr key={i} className="border-b border-[#D4C5AB]/50">
+                      <td className="px-4 py-4">
+                        <div className="w-20 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="w-32 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="w-12 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="w-16 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="w-16 h-4 rounded bg-[#F3EDE7] animate-pulse ml-auto" />
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="w-16 h-6 rounded-full bg-[#F3EDE7] animate-pulse mx-auto" />
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="w-20 h-4 rounded bg-[#F3EDE7] animate-pulse" />
+                      </td>
+                      <td className="px-4 py-4 text-right">
+                        <div className="w-8 h-8 rounded-lg bg-[#F3EDE7] animate-pulse ml-auto" />
+                      </td>
+                    </tr>
+                  ))
+                : filteredOrders.map((order) => (
 
-                <tr
-                  key={order.id}
-                  className="border-b border-[#D4C5AB]/50 hover:bg-[#FFF8F2] transition group"
-                >
-
-                  {/* Order ID */}
-                  <td className="px-4 py-4 font-bold text-[#785900]">
-                    {order.id}
-                  </td>
-
-                  {/* Customer */}
-                  <td className="px-4 py-4">
-
-                    <div className="flex items-center gap-3">
-
-                      <div className="w-9 h-9 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-xs font-bold">
-                        {order.initials}
-                      </div>
-
-                      <span className="text-sm font-medium whitespace-nowrap">
-                        {order.customer}
-                      </span>
-
-                    </div>
-
-                  </td>
-
-                  {/* Items */}
-                  <td className="px-4 py-4 text-sm text-gray-500">
-                    {order.items} {order.items === 1 ? "item" : "items"}
-                  </td>
-
-                  {/* Type */}
-                  <td className="px-4 py-4 text-sm">
-                    {order.type}
-                  </td>
-
-                  {/* Total */}
-                  <td className="px-4 py-4 font-semibold">
-                    R {order.total.toLocaleString()}
-                  </td>
-
-                  {/* Payment */}
-                  <td className="px-4 py-4">
-
-                    <span
-                      className={`flex items-center gap-1.5 text-sm ${
-                        order.payment === "Failed"
-                          ? "text-red-600"
-                          : "text-gray-500"
-                      }`}
+                    <tr
+                      key={order.id}
+                      className="border-b border-[#D4C5AB]/50 hover:bg-[#FFF8F2] transition group"
                     >
-                      <CreditCard size={15} />
-                      {order.payment}
-                    </span>
 
-                  </td>
+                      {/* Order ID */}
+                      <td className="px-4 py-4 font-bold text-[#785900]">
+                        {order.id}
+                      </td>
 
-                  {/* Status */}
-                  <td className="px-4 py-4">
-                    <StatusBadge status={order.status} />
-                  </td>
+                      {/* Customer */}
+                      <td className="px-4 py-4">
 
-                  {/* Date */}
-                  <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {order.date}
-                  </td>
+                        <div className="flex items-center gap-3">
 
-                  {/* Actions */}
-                  <td className="px-4 py-4 text-right">
+                          <div className="w-9 h-9 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-xs font-bold">
+                            {order.initials}
+                          </div>
 
-                    <button
-                      type="button"
-                      className="p-2 rounded-lg text-gray-400 hover:text-[#785900] hover:bg-[#FFF0C7] transition"
-                    >
-                      <MoreVertical size={19} />
-                    </button>
+                          <span className="text-sm font-medium whitespace-nowrap">
+                            {order.customer}
+                          </span>
 
-                  </td>
+                        </div>
 
-                </tr>
+                      </td>
 
-              ))}
+                      {/* Items */}
+                      <td className="px-4 py-4 text-sm text-gray-500">
+                        {order.items} {order.items === 1 ? "item" : "items"}
+                      </td>
+
+                      {/* Type */}
+                      <td className="px-4 py-4 text-sm">
+                        {order.type}
+                      </td>
+
+                      {/* Total */}
+                      <td className="px-4 py-4 font-semibold">
+                        R {order.total.toLocaleString()}
+                      </td>
+
+                      {/* Payment */}
+                      <td className="px-4 py-4">
+
+                        <span
+                          className={`flex items-center gap-1.5 text-sm ${
+                            order.payment === "FAILED"
+                              ? "text-red-600"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          <CreditCard size={15} />
+                          {order.payment}
+                        </span>
+
+                      </td>
+
+                      {/* Status */}
+                      <td className="px-4 py-4">
+                        <StatusBadge status={order.status} />
+                      </td>
+
+                      {/* Date */}
+                      <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        {order.date}
+                      </td>
+
+                      {/* Actions */}
+                      <td className="px-4 py-4 text-right">
+
+                        <button
+                          type="button"
+                          className="p-2 rounded-lg text-gray-400 hover:text-[#785900] hover:bg-[#FFF0C7] transition"
+                        >
+                          <MoreVertical size={19} />
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  ))}
 
             </tbody>
 
@@ -333,7 +391,7 @@ function AdminOrders() {
         </div>
 
         {/* Empty State */}
-        {filteredOrders.length === 0 && (
+        {!loading && filteredOrders.length === 0 && (
           <div className="py-16 text-center">
 
             <Receipt
@@ -356,7 +414,7 @@ function AdminOrders() {
         <div className="px-4 py-4 border-t border-[#D4C5AB] flex flex-col sm:flex-row items-center justify-between gap-4">
 
           <span className="text-sm text-gray-500">
-            Showing 1 to {filteredOrders.length} of 1,248 entries
+            Showing 1 to {filteredOrders.length} of {orders.length} entries
           </span>
 
           <div className="flex items-center gap-1">
@@ -496,7 +554,22 @@ function StatusBadge({ status }) {
     "In Progress": "bg-[#FFDF9E] text-[#5B4300]",
     Completed: "bg-[#E6F3F5] text-[#006877]",
     Cancelled: "bg-[#FFDAD6] text-[#BA1A1A]",
+    CONFIRMED: "bg-blue-100 text-blue-700",
+    PREPARING: "bg-purple-100 text-purple-700",
+    OUT_FOR_DELIVERY: "bg-[#FFDF9E] text-[#5B4300]",
+    PAID: "bg-[#E6F3F5] text-[#006877]",
+    FAILED: "bg-[#FFDAD6] text-[#BA1A1A]",
+    PENDING: "bg-[#FFDF9E] text-[#5B4300]",
   };
+
+  const displayStatus =
+    status === "OUT_FOR_DELIVERY"
+      ? "In Progress"
+      : status === "CONFIRMED"
+        ? "Confirmed"
+        : status === "PREPARING"
+          ? "Preparing"
+          : status;
 
   return (
     <span
@@ -504,7 +577,7 @@ function StatusBadge({ status }) {
         styles[status] || "bg-gray-100 text-gray-600"
       }`}
     >
-      {status}
+      {displayStatus}
     </span>
   );
 }

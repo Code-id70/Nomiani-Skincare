@@ -5,7 +5,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-function AdminHeader() {
+function AdminHeader({ onToggleSidebar }) {
   return (
     <header className="sticky top-0 z-40 h-20 bg-[#FFF8F2]/90 backdrop-blur-md border-b border-[#D4C5AB]">
 
@@ -16,6 +16,7 @@ function AdminHeader() {
 
           <button
             type="button"
+            onClick={onToggleSidebar}
             className="p-2 rounded-lg hover:bg-amber-100 transition"
           >
             <Menu

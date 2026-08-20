@@ -17,7 +17,7 @@ function FeaturedProducts() {
             </span>
 
             <h2
-              className="text-4xl font-bold mt-2"
+              className="text-3xl font-bold mt-2"
               style={{ fontFamily: "Montserrat" }}
             >
               Fresh From The Farm
