@@ -1,13 +1,20 @@
 import os
 from datetime import timedelta
 from pathlib import Path
+import environ
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / 'backend' / '.env')
+
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-me-in-production')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+
+YOCO_SECRET_KEY = env('YOCO_SECRET_KEY', default='')
+YOCO_PUBLIC_KEY = env('YOCO_PUBLIC_KEY', default='')
 
 INSTALLED_APPS = [
     'django.contrib.admin',

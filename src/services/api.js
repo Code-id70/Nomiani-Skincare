@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function apiRequest(endpoint, options = {}) {
-  const token = localStorage.getItem("accessToken");
+  const token = !options.public && localStorage.getItem("accessToken");
 
   const headers = {
     "Content-Type": "application/json",
@@ -11,6 +11,8 @@ export async function apiRequest(endpoint, options = {}) {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
+
+  delete options.public;
 
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,

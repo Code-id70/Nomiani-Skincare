@@ -7,8 +7,19 @@ function PaymentMethod() {
   const location = useLocation();
   const { cartItems } = useCart();
 
-  const customer = location.state?.customer;
-  const deliveryMethod = location.state?.deliveryMethod;
+  let customer = location.state?.customer;
+  let deliveryMethod = location.state?.deliveryMethod;
+
+  if (!customer || !deliveryMethod) {
+    const saved = sessionStorage.getItem("checkoutData");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (!customer) customer = parsed.customer;
+        if (!deliveryMethod) deliveryMethod = parsed.deliveryMethod;
+      } catch {}
+    }
+  }
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.quantity * item.price,
@@ -106,10 +117,6 @@ function PaymentMethod() {
                   </span>
                 </div>
               </div>
-
-              <span className="text-[#785900] text-xl group-hover:translate-x-1 transition">
-                →
-              </span>
             </button>
 
             {/* EFT */}
@@ -135,34 +142,7 @@ function PaymentMethod() {
               </div>
 
               <span className="text-[#785900] text-xl group-hover:translate-x-1 transition">
-                →
-              </span>
-            </button>
-
-            {/* Instant EFT */}
-            <button
-              onClick={() => handlePaymentMethod("instant-eft")}
-              className="w-full bg-white border border-[#D4C5AB] rounded-2xl p-6 flex items-center gap-5 text-left hover:border-[#785900] hover:shadow-md transition-all group"
-            >
-              <div className="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center">
-                <Smartphone
-                  size={26}
-                  className="text-[#785900]"
-                />
-              </div>
-
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg text-gray-900">
-                  Instant EFT
-                </h3>
-
-                <p className="text-sm text-gray-500 mt-1">
-                  Pay instantly using your online banking.
-                </p>
-              </div>
-
-              <span className="text-[#785900] text-xl group-hover:translate-x-1 transition">
-                →
+                
               </span>
             </button>
 
@@ -188,9 +168,6 @@ function PaymentMethod() {
                 </p>
               </div>
 
-              <span className="text-[#785900] text-xl group-hover:translate-x-1 transition">
-                →
-              </span>
             </button>
 
           </div>

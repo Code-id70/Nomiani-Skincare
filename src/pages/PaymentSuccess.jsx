@@ -19,7 +19,7 @@ function PaymentSuccess() {
 
     const timer = setTimeout(async () => {
       try {
-        const orderRes = await apiRequest(`/api/orders/${orderNumber}/`);
+        const orderRes = await apiRequest(`/api/orders/${orderNumber}/`, { public: true });
         const orderData = orderRes.data;
         const checkoutId = orderData?.payment_reference;
 
@@ -32,14 +32,19 @@ function PaymentSuccess() {
         const verifyRes = await apiRequest("/api/payments/yoco/verify/", {
           method: "POST",
           body: JSON.stringify({ checkout_id: checkoutId }),
+          public: true,
         });
         const verifyData = verifyRes.data;
-        const paid = verifyData?.data?.status === "successful";
+        const yocoStatus = verifyData?.status || verifyData?.state || verifyData?.data?.status;
+        const paid = ["successful", "success", "paid", "completed"].includes(yocoStatus);
         setStatus(paid ? "success" : "error");
+        if (paid) {
+          sessionStorage.removeItem("checkoutData");
+        }
         setMessage(
           paid
             ? "Payment confirmed!"
-            : `Payment not successful. Status: ${verifyData?.data?.status || 'unknown'}`
+            : `Payment not successful. Status: ${yocoStatus || 'unknown'}`
         );
       } catch (err) {
         setStatus("error");
@@ -93,7 +98,7 @@ function PaymentSuccess() {
             <p className="text-gray-600 mb-6">{message}</p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                to="/payment-method"
+                to="/checkout"
                 className="flex-1 text-center bg-[#785900] text-white py-3 rounded-xl font-semibold hover:bg-[#5f4700] transition"
               >
                 Try Again

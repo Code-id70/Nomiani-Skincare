@@ -11,7 +11,7 @@ function PaymentCancelled() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
-            to="/payment-method"
+            to="/checkout"
             className="flex-1 text-center bg-[#785900] text-white py-3 rounded-xl font-semibold hover:bg-[#5f4700] transition"
           >
             Try Again

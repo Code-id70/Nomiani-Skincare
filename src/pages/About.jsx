@@ -57,18 +57,12 @@ function About() {
             </h2>
 
             <p className="text-gray-600 leading-8 mb-6">
-              DELI EGGS was founded with one simple goal: provide fresh,
-              affordable eggs backed by friendly customer service.
-            </p>
-
-            <p className="text-gray-600 leading-8 mb-6">
-              Whether you're buying for your family, your shop or your
-              restaurant, we make it easy to order quality eggs with confidence.
-            </p>
-
-            <p className="text-gray-600 leading-8">
-              We believe every customer deserves reliable service, quality
-              products and honest pricing.
+              Deli Eggs started with a simple idea, our founder
+               saw an opportunity to supply <br /> bakeries with quality eggs.
+              What began with a few bakeries quickly grew
+              into a <br />  bigger opportunity. <br />
+              Today, Deli Eggs supplies businesses with
+               quality eegs and reliable service.
             </p>
 
           </div>

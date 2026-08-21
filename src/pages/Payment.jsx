@@ -27,7 +27,6 @@ function Payment() {
   const paymentNames = {
     card: "Card Payment",
     eft: "EFT / Bank Transfer",
-    "instant-eft": "Instant EFT",
     collection: "Pay on Collection",
   };
 
@@ -83,6 +82,7 @@ function Payment() {
     try {
       const response = await createOrder(buildOrderPayload());
       setCreatedOrder(response.data);
+      sessionStorage.removeItem("checkoutData");
       handlePrint();
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
@@ -164,7 +164,7 @@ function Payment() {
     });
   };
 
-  const showPayButton = paymentMethod === "card" || paymentMethod === "instant-eft";
+  const showPayButton = paymentMethod === "card";
   const showPlaceOrderButton = paymentMethod === "eft" || paymentMethod === "collection";
 
   return (
@@ -283,19 +283,7 @@ function Payment() {
               </div>
             )}
 
-            {paymentMethod === "instant-eft" && (
-              <div className="space-y-5">
-                <p className="text-sm text-gray-600">
-                  Click the button below to pay instantly using your online banking via Yoco. You will be redirected to Yoco&apos;s secure payment page.
-                </p>
 
-                {error && (
-                  <p className="text-sm text-red-600 bg-red-50 p-3 rounded-xl">
-                    {error}
-                  </p>
-                )}
-              </div>
-            )}
 
             {paymentMethod === "collection" && (
               <div className="text-center bg-amber-50 rounded-2xl p-8">

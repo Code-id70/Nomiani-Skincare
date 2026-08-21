@@ -12,20 +12,40 @@ import OrderSummary from "../components/checkout/OrderSummary";
 function Checkout() {
   const navigate = useNavigate();
 
-  const [deliveryMethod, setDeliveryMethod] = useState("");
+  const [deliveryMethod, setDeliveryMethod] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem("checkoutData");
+      if (saved) return JSON.parse(saved).deliveryMethod || "";
+    } catch {}
+    return "";
+  });
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-
-    street: "",
-    suburb: "",
-    city: "",
-    postalCode: "",
-
-    notes: "",
+  const [formData, setFormData] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem("checkoutData");
+      if (saved) return JSON.parse(saved).customer || {
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        street: "",
+        suburb: "",
+        city: "",
+        postalCode: "",
+        notes: "",
+      };
+    } catch {}
+    return {
+      firstName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      street: "",
+      suburb: "",
+      city: "",
+      postalCode: "",
+      notes: "",
+    };
   });
 
   const [errors, setErrors] = useState({});
@@ -68,16 +88,15 @@ function Checkout() {
   const handlePlaceOrder = () => {
     if (!validate()) return;
 
-    console.log({
+    const checkoutData = {
       customer: formData,
       deliveryMethod,
-    });
+    };
+
+    sessionStorage.setItem("checkoutData", JSON.stringify(checkoutData));
 
     navigate("/payment-method", {
-      state: {
-        customer: formData,
-        deliveryMethod,
-      },
+      state: checkoutData,
     });
   };
 

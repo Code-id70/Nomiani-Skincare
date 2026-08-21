@@ -1,7 +1,6 @@
-import os
 import requests
 from django.conf import settings
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -10,6 +9,7 @@ from orders.models import Order, OrderItem
 from orders.serializers import OrderCreateSerializer
 
 
+@authentication_classes([])
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def create_yoco_checkout(request):
@@ -115,7 +115,7 @@ def create_yoco_checkout(request):
     order.total = subtotal + delivery_fee
     order.save()
 
-    yoco_secret = os.environ.get('YOCO_SECRET_KEY')
+    yoco_secret = settings.YOCO_SECRET_KEY
     if not yoco_secret:
         return Response({'success': False, 'message': 'Yoco is not configured on the server.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -176,6 +176,7 @@ def create_yoco_checkout(request):
     }, status=status.HTTP_200_OK)
 
 
+@authentication_classes([])
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def verify_yoco_payment(request):
@@ -183,7 +184,7 @@ def verify_yoco_payment(request):
     if not checkout_id:
         return Response({'success': False, 'message': 'checkout_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    yoco_secret = os.environ.get('YOCO_SECRET_KEY')
+    yoco_secret = settings.YOCO_SECRET_KEY
     if not yoco_secret:
         return Response({'success': False, 'message': 'Yoco is not configured on the server.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

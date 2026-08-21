@@ -88,7 +88,7 @@ class OrderViewSet(BaseViewSet):
 
         # Create order
         payment_status = 'PENDING'
-        if data.get('payment_method') in ['Card', 'Instant EFT']:
+        if data.get('payment_method') in ['Card']:
             payment_status = 'PAID'
 
         order = Order.objects.create(
@@ -152,6 +152,7 @@ from rest_framework.views import APIView
 
 class OrderStatusView(APIView):
     permission_classes = []
+    authentication_classes = []
 
     def get(self, request, order_number):
         try:

@@ -29,7 +29,7 @@ function FeaturedProducts() {
             to="/shop"
             className="hidden md:block text-[#785900] font-semibold hover:underline"
           >
-            View All →
+            View All
           </Link>
 
         </div>
