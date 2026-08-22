@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft, ShieldCheck, Printer, RotateCcw, Loader2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { createOrder } from "../services/orderService";
+import { API_URL } from "../services/api";
 
 function Payment() {
   const location = useLocation();
@@ -122,7 +123,7 @@ function Payment() {
         total,
       };
 
-      const response = await fetch("/api/payments/yoco/checkout/", {
+      const response = await fetch(`${API_URL}/api/payments/yoco/checkout/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
