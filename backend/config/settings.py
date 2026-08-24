@@ -107,6 +107,11 @@ CORS_ALLOWED_ORIGINS = os.environ.get(
     'http://localhost:5173,http://localhost:3000'
 ).split(',')
 
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    'CSRF_TRUSTED_ORIGINS',
+    'https://deli-eggs.onrender.com,https://your-app.onrender.com,https://deli-eggs.netlify.app'
+).split(',')
+
 # REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
