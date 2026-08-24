@@ -10,7 +10,7 @@ urlpatterns = [
     # Public product endpoints
     path('api/products/', include('products.urls')),
     # Admin product endpoints
-    path('api/admin/products/', include('products.urls')),
+    path('api/admin/products/', include('products.admin_urls')),
     # Customer order endpoints
     path('api/orders/', include('orders.urls')),
     # Admin order endpoints
