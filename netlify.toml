@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_API_URL"
+
+[context.production.environment]
+  VITE_API_URL = "https://deli-eggs.onrender.com"
+  VITE_YOCO_PUBLIC_KEY = "pk_test_a674d6cfBODVoMD00364"
+
+[context.deploy-preview.environment]
+  VITE_API_URL = "http://localhost:8000"
+
+[context.branch-deploy.environment]
+  VITE_API_URL = "http://localhost:8000"
