@@ -1,3 +1,4 @@
+import os
 import requests
 from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -119,8 +120,9 @@ def create_yoco_checkout(request):
     if not yoco_secret:
         return Response({'success': False, 'message': 'Yoco is not configured on the server.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    frontend_url = os.environ.get('FRONTEND_URL', 'https://deli-eggs.netlify.app')
+
     amount_in_cents = int(float(order.total) * 100)
-    frontend_url = 'http://localhost:5173'
 
     checkout_payload = {
         'amount': amount_in_cents,

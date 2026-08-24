@@ -6,8 +6,11 @@ import os
 
 def create_admin_user(sender, **kwargs):
     User = get_user_model()
-    username = os.environ.get('ADMIN_USERNAME', 'Clifford')
-    password = os.environ.get('ADMIN_PASSWORD', 'Deli.cliff-eggs@2026!#^*+)&')
+    username = os.environ.get('ADMIN_USERNAME')
+    password = os.environ.get('ADMIN_PASSWORD')
+
+    if not username or not password:
+        return
 
     if not User.objects.filter(username=username).exists():
         User.objects.create_superuser(
