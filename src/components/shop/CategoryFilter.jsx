@@ -13,8 +13,8 @@ function CategoryFilter({
           onClick={() => setSelectedCategory(category)}
           className={`px-5 py-2 rounded-full font-medium transition-all duration-300 ${
             selectedCategory === category
-              ? "bg-[#785900] text-white"
-              : "bg-white border border-gray-200 hover:border-[#785900] hover:text-[#785900]"
+              ? "bg-[#7C3AED] text-white"
+              : "bg-white border border-gray-200 hover:border-[#7C3AED] hover:text-[#7C3AED]"
           }`}
         >
           {category}
@@ -27,3 +27,4 @@ function CategoryFilter({
 }
 
 export default CategoryFilter;
+

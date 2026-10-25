@@ -2,13 +2,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   ShoppingCart,
-  Egg,
+  Package,
   Users,
   BarChart3,
   Settings,
   Plus,
   LogOut,
   X,
+  Sparkles,
 } from "lucide-react";
 
 function AdminSidebar({ open, onClose }) {
@@ -34,7 +35,7 @@ function AdminSidebar({ open, onClose }) {
     {
       name: "Products",
       path: "/admin/products",
-      icon: Egg,
+      icon: Package,
     },
     {
       name: "Customers",
@@ -63,16 +64,16 @@ function AdminSidebar({ open, onClose }) {
           className="flex items-center gap-3"
           onClick={onClose}
         >
-          <div className="w-10 h-10 rounded-xl bg-[#785900] flex items-center justify-center">
-            <Egg className="text-white" size={22} />
+          <div className="w-10 h-10 rounded-xl bg-[#7C3AED] flex items-center justify-center">
+            <Sparkles className="text-white" size={22} />
           </div>
 
           <div>
             <h1
-              className="text-xl font-bold text-[#785900]"
+              className="text-xl font-bold text-[#7C3AED]"
               style={{ fontFamily: "Montserrat" }}
             >
-              DELI EGGS
+              Nomiani Skincare
             </h1>
 
             <p className="text-[11px] text-gray-500">
@@ -98,8 +99,8 @@ function AdminSidebar({ open, onClose }) {
               className={({ isActive }) =>
                 `flex items-center gap-4 px-4 py-3 rounded-xl transition-all ${
                   isActive
-                    ? "bg-[#FFF0C7] text-[#785900] font-semibold"
-                    : "text-gray-600 hover:bg-[#FFF8F2] hover:text-[#785900]"
+                    ? "bg-[#FFF0C7] text-[#7C3AED] font-semibold"
+                    : "text-gray-600 hover:bg-[#FFF8F2] hover:text-[#7C3AED]"
                 }`
               }
             >
@@ -163,7 +164,7 @@ function AdminSidebar({ open, onClose }) {
         `}
       >
         <div className="flex items-center justify-between px-4 h-20 border-b border-[#D4C5AB]/60">
-          <span className="text-lg font-bold text-[#785900]" style={{ fontFamily: "Montserrat" }}>
+          <span className="text-lg font-bold text-[#7C3AED]" style={{ fontFamily: "Montserrat" }}>
             Menu
           </span>
           <button
@@ -184,3 +185,4 @@ function AdminSidebar({ open, onClose }) {
 }
 
 export default AdminSidebar;
+

@@ -4,19 +4,26 @@ import { ArrowLeft, ShieldCheck, Printer, RotateCcw, Loader2 } from "lucide-reac
 import { useCart } from "../context/CartContext";
 import { createOrder } from "../services/orderService";
 import { API_URL } from "../services/api";
+import BottomNav from "../components/layout/BottomNav";
 
 function Payment() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems } = useCart();
+const { items: contextItems } = useCart();
 
   const paymentMethod = location.state?.paymentMethod || "card";
   const customer = location.state?.customer;
   const deliveryMethod = location.state?.deliveryMethod;
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.quantity * item.price, 0);
-  const deliveryFee = deliveryMethod === "delivery" ? location.state?.deliveryFee ?? 0 : 0;
-  const total = subtotal + deliveryFee;
+  const items = location.state?.items?.length
+    ? location.state.items
+    : contextItems;
+
+  const subtotal =
+    location.state?.subtotal ??
+    items.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  const deliveryFee = location.state?.deliveryFee ?? 0;
+  const total = location.state?.total ?? subtotal + deliveryFee;
 
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
@@ -65,7 +72,7 @@ function Payment() {
       order_type: orderType,
       delivery_address: deliveryMethod === "delivery" ? [customer?.street, customer?.suburb, customer?.city].filter(Boolean).join(", ") : "",
       delivery_distance: null,
-      items: cartItems.map((item) => ({
+items: items.map((item) => ({
         product_id: item.id,
         product_name: item.name,
         quantity: item.quantity,
@@ -114,7 +121,7 @@ function Payment() {
           notes: customer?.notes || "",
         },
         deliveryMethod,
-        items: cartItems.map((item) => ({
+items: items.map((item) => ({
           product_id: item.id,
           product_name: item.name,
           quantity: item.quantity,
@@ -157,7 +164,7 @@ function Payment() {
         total: parseFloat(createdOrder.total),
         subtotal: parseFloat(createdOrder.subtotal),
         deliveryFee: parseFloat(createdOrder.delivery_fee),
-        cartItems,
+        cartItems: items,
         customer,
         deliveryMethod,
         orderId: createdOrder.id,
@@ -169,6 +176,7 @@ function Payment() {
   const showPlaceOrderButton = paymentMethod === "eft" || paymentMethod === "collection";
 
   return (
+    <>
     <div className="min-h-screen bg-[#FFF8F2]">
 
       {/* Header */}
@@ -176,14 +184,14 @@ function Payment() {
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
           <Link
             to="/payment-method"
-            className="flex items-center gap-2 text-gray-600 hover:text-[#785900] transition"
+            className="flex items-center gap-2 text-gray-600 hover:text-[#7C3AED] transition"
           >
             <ArrowLeft size={20} />
             Change Payment Method
           </Link>
 
-          <span className="font-semibold text-[#785900]">
-            DELI EGGS
+          <span className="font-semibold text-[#7C3AED]">
+            Nomiani Skincare
           </span>
         </div>
       </header>
@@ -195,7 +203,7 @@ function Payment() {
           {/* Heading */}
           <div className="text-center mb-8">
 
-            <span className="inline-block bg-amber-100 text-[#785900] px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span className="inline-block bg-violet-100 text-[#7C3AED] px-4 py-2 rounded-full text-sm font-semibold mb-4">
               {paymentNames[paymentMethod] || paymentMethod}
             </span>
 
@@ -207,7 +215,7 @@ function Payment() {
             </h1>
 
             <p className="mt-3 text-gray-600">
-              Complete your payment to place your DELI EGGS order.
+              Complete your payment to place your Nomiani Skincare order.
             </p>
 
           </div>
@@ -221,7 +229,7 @@ function Payment() {
                 Amount to pay
               </span>
 
-              <span className="text-2xl font-bold text-[#785900]">
+              <span className="text-2xl font-bold text-[#7C3AED]">
                 R {Number(total).toFixed(2)}
               </span>
             </div>
@@ -241,7 +249,7 @@ function Payment() {
             )}
 
             {paymentMethod === "eft" && (
-              <div className="bg-amber-50 rounded-2xl p-6">
+              <div className="bg-violet-50 rounded-2xl p-6">
 
                 <h3 className="font-bold text-lg mb-4">
                   Bank Transfer Details
@@ -256,7 +264,7 @@ function Payment() {
 
                   <div className="flex justify-between">
                     <span className="text-gray-500">Account Name</span>
-                    <span className="font-semibold">DELI EGGS</span>
+                    <span className="font-semibold">Nomiani Skincare</span>
                   </div>
 
                   <div className="flex justify-between">
@@ -266,7 +274,7 @@ function Payment() {
 
                   <div className="flex justify-between">
                     <span className="text-gray-500">Reference</span>
-                    <span className="font-semibold">DELI-ORDER</span>
+                    <span className="font-semibold">HALO-ORDER</span>
                   </div>
 
                 </div>
@@ -287,7 +295,7 @@ function Payment() {
 
 
             {paymentMethod === "collection" && (
-              <div className="text-center bg-amber-50 rounded-2xl p-8">
+              <div className="text-center bg-violet-50 rounded-2xl p-8">
 
                 <h3 className="font-bold text-lg">
                   Pay on Collection
@@ -315,8 +323,8 @@ function Payment() {
                   disabled={processing}
                   className="w-full flex items-center justify-center gap-2 px-5 py-4 rounded-xl font-semibold text-white text-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: "linear-gradient(180deg, #8a6a1c 0%, #785900 60%, #5f4700 100%)",
-                    boxShadow: "0 3px 0 #45350a, 0 4px 8px rgba(0,0,0,0.25)",
+                    background: "linear-gradient(180deg, #7C3AED 0%, #7C3AED 60%, #5B21B6 100%)",
+                    boxShadow: "0 3px 0 #312E81, 0 4px 8px rgba(0,0,0,0.25)",
                   }}
                 >
                   {processing ? (
@@ -336,8 +344,8 @@ function Payment() {
                   disabled={processing}
                   className="w-full flex items-center justify-center gap-2 px-5 py-4 rounded-xl font-semibold text-white text-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: "linear-gradient(180deg, #8a6a1c 0%, #785900 60%, #5f4700 100%)",
-                    boxShadow: "0 3px 0 #45350a, 0 4px 8px rgba(0,0,0,0.25)",
+                    background: "linear-gradient(180deg, #7C3AED 0%, #7C3AED 60%, #5B21B6 100%)",
+                    boxShadow: "0 3px 0 #312E81, 0 4px 8px rgba(0,0,0,0.25)",
                   }}
                 >
                   {processing ? (
@@ -390,17 +398,17 @@ function Payment() {
                 >
                   <div className="text-center">
                     <p className="text-sm tracking-widest font-bold text-[#201B11]" style={{ fontFamily: "Montserrat" }}>
-                      DELI EGGS
+                      Nomiani Skincare
                     </p>
-                    <p className="text-[10px] text-gray-500 mt-1">Where your breakfast starts</p>
+                    <p className="text-[10px] text-gray-500 mt-1">Clean skincare for every skin type</p>
                   </div>
 
-                  <div className="border-t border-dashed border-[#785900]/40 my-3" />
+                  <div className="border-t border-dashed border-[#7C3AED]/40 my-3" />
 
                   <div className="text-[10px] text-gray-600 space-y-1">
                     <div className="flex justify-between">
                       <span>Order #</span>
-                      <span className="font-bold text-[#785900]">{createdOrder?.order_number}</span>
+                      <span className="font-bold text-[#7C3AED]">{createdOrder?.order_number}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Date</span>
@@ -408,10 +416,10 @@ function Payment() {
                     </div>
                   </div>
 
-                  <div className="border-t border-dashed border-[#785900]/40 my-3" />
+                  <div className="border-t border-dashed border-[#7C3AED]/40 my-3" />
 
                   <div className="space-y-1.5">
-                    {cartItems.map((item) => (
+                    {items.map((item) => (
                       <div key={item.id} className="flex justify-between text-[11px]">
                         <span className="text-[#201B11]">{item.quantity} x {item.name}</span>
                         <span className="text-[#201B11]">R {(item.quantity * item.price).toFixed(2)}</span>
@@ -419,15 +427,15 @@ function Payment() {
                     ))}
                   </div>
 
-                  <div className="border-t border-dashed border-[#785900]/40 my-3" />
+                  <div className="border-t border-dashed border-[#7C3AED]/40 my-3" />
 
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-sm text-[#201B11]">TOTAL</span>
-                    <span className="font-bold text-lg text-[#785900]">R {total.toFixed(2)}</span>
+                    <span className="font-bold text-lg text-[#7C3AED]">R {total.toFixed(2)}</span>
                   </div>
 
                   {printerStatus === "done" && createdOrder && (
-                    <p className="text-center text-[10px] text-[#785900] font-semibold tracking-wide mt-4 animate-pulse">
+                    <p className="text-center text-[10px] text-[#7C3AED] font-semibold tracking-wide mt-4 animate-pulse">
                       TAP TO CONTINUE →
                     </p>
                   )}
@@ -439,8 +447,8 @@ function Payment() {
                 <div className="rounded-t-2xl rounded-b-xl px-5 pt-4 pb-5 shadow-lg border border-[#D4C5AB] bg-[#FFF8F2]">
 
                   <div className="text-center mb-3">
-                    <span className="text-[9px] tracking-[0.3em] text-[#785900] font-mono font-semibold">
-                      DELI EGGS · POS-100
+                    <span className="text-[9px] tracking-[0.3em] text-[#7C3AED] font-mono font-semibold">
+                      Nomiani Skincare · POS-100
                     </span>
                   </div>
 
@@ -482,8 +490,8 @@ function Payment() {
                       disabled={printerStatus === "printing" || !createdOrder}
                       className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white text-sm transition disabled:opacity-50 disabled:cursor-not-allowed"
                       style={{
-                        background: "linear-gradient(180deg, #8a6a1c 0%, #785900 60%, #5f4700 100%)",
-                        boxShadow: "0 3px 0 #45350a, 0 4px 8px rgba(0,0,0,0.25)",
+                        background: "linear-gradient(180deg, #7C3AED 0%, #7C3AED 60%, #5B21B6 100%)",
+                        boxShadow: "0 3px 0 #312E81, 0 4px 8px rgba(0,0,0,0.25)",
                       }}
                     >
                       <Printer size={15} />
@@ -492,7 +500,7 @@ function Payment() {
 
                     <button
                       onClick={handleReset}
-                      className="flex items-center justify-center w-11 h-11 rounded-xl text-[#785900] transition hover:bg-[#EFE4D4]"
+                      className="flex items-center justify-center w-11 h-11 rounded-xl text-[#7C3AED] transition hover:bg-[#EFE4D4]"
                       style={{
                         background: "#F2E9DA",
                         boxShadow: "0 3px 0 #D4C5AB, 0 4px 8px rgba(0,0,0,0.1)",
@@ -518,7 +526,11 @@ function Payment() {
 
       </main>
     </div>
+    <BottomNav />
+    </>
   );
 }
 
 export default Payment;
+
+

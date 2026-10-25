@@ -9,9 +9,9 @@ function SearchBar({ searchTerm, setSearchTerm }) {
         className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
       />
 
-      <input
-        type="text"
-        placeholder="Search eggs..."
+        <input
+          type="text"
+          placeholder="Search products..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="
@@ -25,7 +25,7 @@ function SearchBar({ searchTerm, setSearchTerm }) {
           pr-4
           outline-none
           transition
-          focus:border-[#785900]
+          focus:border-[#7C3AED]
           focus:ring-2
           focus:ring-amber-200
         "
@@ -36,3 +36,4 @@ function SearchBar({ searchTerm, setSearchTerm }) {
 }
 
 export default SearchBar;
+

@@ -15,7 +15,7 @@ function AdminSettings() {
   const [activeSection, setActiveSection] = useState("business");
 
   const [settings, setSettings] = useState({
-    businessName: "DELI EGGS",
+    businessName: "Nomiani Skincare",
 
     address:
       "Pretoria, Gauteng, South Africa",
@@ -30,7 +30,7 @@ function AdminSettings() {
 
     phone: "012 000 0000",
 
-    email: "info@delieggs.co.za",
+    email: "info@haloskin.co.za",
   });
 
   const [saved, setSaved] = useState(false);
@@ -78,7 +78,7 @@ function AdminSettings() {
         </h1>
 
         <p className="text-gray-500 mt-2">
-          Manage your DELI EGGS business and admin settings.
+          Manage your Nomiani Skincare business and admin settings.
         </p>
 
       </div>
@@ -155,7 +155,7 @@ function AdminSettings() {
 
               <SettingsCard
                 title="Business Information"
-                description="Basic information about your DELI EGGS business."
+                description="Basic information about your Nomiani Skincare business."
                 icon={Store}
               >
 
@@ -210,7 +210,7 @@ function AdminSettings() {
                         )
                       }
                       rows="3"
-                      className="w-full pl-10 pr-4 py-3 bg-[#FFF8F2] border border-[#D4C5AB] rounded-lg outline-none resize-none focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10 text-sm"
+                      className="w-full pl-10 pr-4 py-3 bg-[#FFF8F2] border border-[#D4C5AB] rounded-lg outline-none resize-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10 text-sm"
                     />
 
                   </div>
@@ -322,7 +322,7 @@ function AdminSettings() {
 
                   <div className="flex gap-3">
 
-                    <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center shrink-0">
 
                       <Truck size={19} />
 
@@ -419,7 +419,7 @@ function AdminSettings() {
 
                 <ToggleSetting
                   title="Customer Messages"
-                  description="Receive notifications when customers contact DELI EGGS."
+                  description="Receive notifications when customers contact Nomiani Skincare."
                   defaultChecked
                 />
 
@@ -445,14 +445,14 @@ function AdminSettings() {
 
                 <div className="flex items-center gap-4">
 
-                  <div className="w-16 h-16 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-xl font-bold">
+                  <div className="w-16 h-16 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center text-xl font-bold">
                     AD
                   </div>
 
                   <div>
 
                     <h3 className="font-semibold text-[#201B11]">
-                      DELI EGGS Admin
+                      Nomiani Skincare Admin
                     </h3>
 
                     <p className="text-sm text-gray-500">
@@ -493,7 +493,7 @@ function AdminSettings() {
 
                 <button
                   type="button"
-                  className="mt-6 px-5 py-2.5 bg-[#785900] text-white rounded-lg font-semibold text-sm hover:bg-[#5B4200] transition"
+                  className="mt-6 px-5 py-2.5 bg-[#7C3AED] text-white rounded-lg font-semibold text-sm hover:bg-[#4C1D95] transition"
                 >
                   Update Password
                 </button>
@@ -512,7 +512,7 @@ function AdminSettings() {
 
             <SettingsCard
               title="Security"
-              description="Security information for your DELI EGGS admin account."
+              description="Security information for your Nomiani Skincare admin account."
               icon={ShieldCheck}
             >
 
@@ -563,8 +563,8 @@ function SettingsTab({
       onClick={onClick}
       className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition ${
         active
-          ? "bg-[#F3E6C5] text-[#785900] font-semibold"
-          : "text-gray-600 hover:bg-[#FFF8F2] hover:text-[#785900]"
+          ? "bg-[#F3E6C5] text-[#7C3AED] font-semibold"
+          : "text-gray-600 hover:bg-[#FFF8F2] hover:text-[#7C3AED]"
       }`}
     >
 
@@ -594,7 +594,7 @@ function SettingsCard({
 
         <div className="flex items-start gap-3">
 
-          <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center shrink-0">
 
             <Icon size={19} />
 
@@ -667,7 +667,7 @@ function InputField({
             prefix ? "pl-8" : "pl-3"
           } ${
             suffix ? "pr-16" : "pr-3"
-          } bg-[#FFF8F2] border border-[#D4C5AB] rounded-lg outline-none text-sm focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10`}
+          } bg-[#FFF8F2] border border-[#D4C5AB] rounded-lg outline-none text-sm focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10`}
         />
 
         {suffix && (
@@ -715,7 +715,7 @@ function ToggleSetting({
         onClick={() => setEnabled(!enabled)}
         className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${
           enabled
-            ? "bg-[#785900]"
+            ? "bg-[#7C3AED]"
             : "bg-gray-300"
         }`}
       >
@@ -778,7 +778,7 @@ function SaveButton({ saved }) {
 
       <button
         type="submit"
-        className="flex items-center gap-2 px-6 py-3 bg-[#785900] text-white rounded-lg font-semibold text-sm hover:bg-[#5B4200] transition shadow-sm"
+        className="flex items-center gap-2 px-6 py-3 bg-[#7C3AED] text-white rounded-lg font-semibold text-sm hover:bg-[#4C1D95] transition shadow-sm"
       >
 
         <Save size={18} />
@@ -793,3 +793,4 @@ function SaveButton({ saved }) {
 
 
 export default AdminSettings;
+

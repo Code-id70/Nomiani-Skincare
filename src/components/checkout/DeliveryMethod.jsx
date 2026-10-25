@@ -20,7 +20,7 @@ function DeliveryMethod({
 
         {/* Collection */}
 
-        <label className="flex items-start gap-4 p-5 border rounded-2xl cursor-pointer hover:border-[#785900] transition">
+        <label className="flex items-start gap-4 p-5 border rounded-2xl cursor-pointer hover:border-[#7C3AED] transition">
 
           <input
             type="radio"
@@ -47,7 +47,7 @@ function DeliveryMethod({
 
         {/* Delivery */}
 
-        <label className="flex items-start gap-4 p-5 border rounded-2xl cursor-pointer hover:border-[#785900] transition">
+        <label className="flex items-start gap-4 p-5 border rounded-2xl cursor-pointer hover:border-[#7C3AED] transition">
 
           <input
             type="radio"
@@ -83,3 +83,4 @@ function DeliveryMethod({
 }
 
 export default DeliveryMethod;
+

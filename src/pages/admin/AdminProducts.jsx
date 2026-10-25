@@ -256,14 +256,14 @@ function AdminProducts() {
           </h1>
 
           <p className="text-gray-500 mt-2">
-            Manage your DELI EGGS products and inventory.
+            Manage your Nomiani Skincare products and inventory.
           </p>
         </div>
 
         <button
           type="button"
           onClick={() => setShowAddModal(true)}
-          className="bg-[#785900] text-white font-semibold px-5 py-3 rounded-lg shadow-sm hover:bg-[#5B4200] transition-all flex items-center justify-center gap-2"
+          className="bg-[#7C3AED] text-white font-semibold px-5 py-3 rounded-lg shadow-sm hover:bg-[#4C1D95] transition-all flex items-center justify-center gap-2"
         >
           <Plus size={19} />
 
@@ -299,7 +299,7 @@ function AdminProducts() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search products..."
-            className="w-full h-11 pl-10 pr-4 bg-white border border-[#D4C5AB] rounded-lg outline-none text-sm focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
+            className="w-full h-11 pl-10 pr-4 bg-white border border-[#D4C5AB] rounded-lg outline-none text-sm focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
           />
 
         </div>
@@ -321,7 +321,7 @@ function AdminProducts() {
             <select
               value={stockFilter}
               onChange={(e) => setStockFilter(e.target.value)}
-              className="h-11 pl-9 pr-8 bg-white border border-[#D4C5AB] rounded-lg text-sm outline-none focus:border-[#785900]"
+              className="h-11 pl-9 pr-8 bg-white border border-[#D4C5AB] rounded-lg text-sm outline-none focus:border-[#7C3AED]"
             >
               <option value="all">
                 All Status
@@ -351,7 +351,7 @@ function AdminProducts() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="h-11 pl-9 pr-8 bg-white border border-[#D4C5AB] rounded-lg text-sm outline-none focus:border-[#785900]"
+              className="h-11 pl-9 pr-8 bg-white border border-[#D4C5AB] rounded-lg text-sm outline-none focus:border-[#7C3AED]"
             >
               <option value="name">
                 Sort by Name
@@ -392,7 +392,7 @@ function AdminProducts() {
                 </th>
 
                 <th className="px-4 py-4 text-xs uppercase tracking-wider text-gray-500 font-semibold">
-                  Size
+                  Volume / Skin Type
                 </th>
 
                 <th className="px-4 py-4 text-xs uppercase tracking-wider text-gray-500 font-semibold">
@@ -506,7 +506,7 @@ function AdminProducts() {
                           <button
                             type="button"
                             title="Edit"
-                            className="p-2 rounded-md text-gray-500 hover:text-[#785900] hover:bg-[#F3EDE7] transition"
+                            className="p-2 rounded-md text-gray-500 hover:text-[#7C3AED] hover:bg-[#F3EDE7] transition"
                           >
                             <Edit3 size={18} />
                           </button>
@@ -520,7 +520,7 @@ function AdminProducts() {
                             }
                             onClick={() => toggleStock(product.id)}
                             disabled={savingId === product.id}
-                            className="p-2 rounded-md text-gray-500 hover:text-[#785900] hover:bg-[#F3EDE7] transition disabled:opacity-50"
+                            className="p-2 rounded-md text-gray-500 hover:text-[#7C3AED] hover:bg-[#F3EDE7] transition disabled:opacity-50"
                           >
                             <PackageCheck size={18} />
                           </button>
@@ -684,9 +684,9 @@ function AdminProducts() {
                   Add Product
                 </h2>
 
-                <p className="text-sm text-gray-500 mt-1">
-                  Add a new DELI EGGS product.
-                </p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Add a new Nomiani Skincare product.
+                  </p>
 
               </div>
 
@@ -725,8 +725,8 @@ function AdminProducts() {
                       name: e.target.value,
                     })
                   }
-                  placeholder="e.g. Large Eggs"
-                  className="w-full h-11 px-4 border border-[#D4C5AB] rounded-lg outline-none focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
+                  placeholder="e.g. Gentle Cleanser"
+                  className="w-full h-11 px-4 border border-[#D4C5AB] rounded-lg outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
                 />
 
               </div>
@@ -749,8 +749,8 @@ function AdminProducts() {
                       size: e.target.value,
                     })
                   }
-                  placeholder="e.g. 30 Tray"
-                  className="w-full h-11 px-4 border border-[#D4C5AB] rounded-lg outline-none focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
+                  placeholder="e.g. 150 ml"
+                  className="w-full h-11 px-4 border border-[#D4C5AB] rounded-lg outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
                 />
 
               </div>
@@ -782,7 +782,7 @@ function AdminProducts() {
                       })
                     }
                     placeholder="95.00"
-                    className="w-full h-11 pl-9 pr-4 border border-[#D4C5AB] rounded-lg outline-none focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
+                    className="w-full h-11 pl-9 pr-4 border border-[#D4C5AB] rounded-lg outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
                   />
 
                 </div>
@@ -804,7 +804,7 @@ function AdminProducts() {
 
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-[#785900] text-white font-semibold hover:bg-[#5B4200] transition"
+                  className="px-5 py-2.5 rounded-lg bg-[#7C3AED] text-white font-semibold hover:bg-[#4C1D95] transition"
                 >
                   Add Product
                 </button>
@@ -859,3 +859,5 @@ function StockBadge({ inStock, small = false }) {
 }
 
 export default AdminProducts;
+
+

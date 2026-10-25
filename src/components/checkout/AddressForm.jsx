@@ -1,6 +1,6 @@
 function AddressForm({ formData, handleChange, errors = {} }) {
   const inputClass = (field) =>
-    `w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900] ${
+    `w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] ${
       errors[field] ? "border-red-500" : ""
     }`;
 
@@ -88,7 +88,7 @@ function AddressForm({ formData, handleChange, errors = {} }) {
             value={formData.postalCode}
             onChange={handleChange}
             placeholder="0001"
-            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
           />
         </div>
 
@@ -99,3 +99,4 @@ function AddressForm({ formData, handleChange, errors = {} }) {
 }
 
 export default AddressForm;
+

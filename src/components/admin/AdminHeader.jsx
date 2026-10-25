@@ -17,11 +17,11 @@ function AdminHeader({ onToggleSidebar }) {
           <button
             type="button"
             onClick={onToggleSidebar}
-            className="p-2 rounded-lg hover:bg-amber-100 transition"
+            className="p-2 rounded-lg hover:bg-violet-100 transition"
           >
             <Menu
               size={22}
-              className="text-[#785900]"
+              className="text-[#7C3AED]"
             />
           </button>
 
@@ -42,7 +42,7 @@ function AdminHeader({ onToggleSidebar }) {
           {/* Search */}
           <button
             type="button"
-            className="p-2.5 rounded-full text-gray-500 hover:bg-amber-100 hover:text-[#785900] transition"
+            className="p-2.5 rounded-full text-gray-500 hover:bg-violet-100 hover:text-[#7C3AED] transition"
           >
             <Search size={20} />
           </button>
@@ -50,7 +50,7 @@ function AdminHeader({ onToggleSidebar }) {
           {/* Notifications */}
           <button
             type="button"
-            className="relative p-2.5 rounded-full text-gray-500 hover:bg-amber-100 hover:text-[#785900] transition"
+            className="relative p-2.5 rounded-full text-gray-500 hover:bg-violet-100 hover:text-[#7C3AED] transition"
           >
             <Bell size={20} />
 
@@ -63,7 +63,7 @@ function AdminHeader({ onToggleSidebar }) {
             className="flex items-center gap-2 ml-2 pl-2 border-l border-[#D4C5AB]"
           >
 
-            <div className="w-9 h-9 rounded-full bg-[#785900] text-white flex items-center justify-center font-semibold text-sm">
+            <div className="w-9 h-9 rounded-full bg-[#7C3AED] text-white flex items-center justify-center font-semibold text-sm">
               A
             </div>
 
@@ -95,3 +95,4 @@ function AdminHeader({ onToggleSidebar }) {
 }
 
 export default AdminHeader;
+

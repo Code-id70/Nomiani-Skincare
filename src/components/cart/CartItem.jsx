@@ -29,10 +29,10 @@ function CartItem({ item }) {
         </h2>
 
         <p className="text-gray-500 mt-1">
-          {item.size}
+          {item.volume}
         </p>
 
-        <p className="text-[#785900] font-bold text-2xl mt-4">
+        <p className="text-[#7C3AED] font-bold text-2xl mt-4">
           R {item.price}
         </p>
 
@@ -68,7 +68,7 @@ function CartItem({ item }) {
           Subtotal
         </p>
 
-        <p className="text-2xl font-bold text-[#785900]">
+        <p className="text-2xl font-bold text-[#7C3AED]">
           R {item.price * item.quantity}
         </p>
 
@@ -88,3 +88,4 @@ function CartItem({ item }) {
 }
 
 export default CartItem;
+

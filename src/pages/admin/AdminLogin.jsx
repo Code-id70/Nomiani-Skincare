@@ -68,10 +68,10 @@ function AdminLogin() {
 
           <Link to="/" className="inline-block">
             <h1
-              className="text-4xl font-bold text-[#785900]"
+              className="text-4xl font-bold text-[#7C3AED]"
               style={{ fontFamily: "Montserrat" }}
             >
-              DELI EGGS
+              Nomiani Skincare
             </h1>
           </Link>
 
@@ -94,7 +94,7 @@ function AdminLogin() {
             </h2>
 
             <p className="text-gray-500 mt-2">
-              Sign in to manage your DELI EGGS business.
+              Sign in to manage your Nomiani Skincare business.
             </p>
 
           </div>
@@ -132,7 +132,7 @@ function AdminLogin() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your username or email"
                   autoComplete="email"
-                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-200 bg-white outline-none transition focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
+                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-200 bg-white outline-none transition focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
                 />
 
               </div>
@@ -153,7 +153,7 @@ function AdminLogin() {
 
                 <button
                   type="button"
-                  className="text-sm font-medium text-[#785900] hover:underline"
+                  className="text-sm font-medium text-[#7C3AED] hover:underline"
                 >
                   Forgot password?
                 </button>
@@ -174,13 +174,13 @@ function AdminLogin() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   autoComplete="current-password"
-                  className="w-full h-14 pl-12 pr-12 rounded-xl border border-gray-200 bg-white outline-none transition focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
+                  className="w-full h-14 pl-12 pr-12 rounded-xl border border-gray-200 bg-white outline-none transition focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#785900] transition"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#7C3AED] transition"
                   aria-label={
                     showPassword
                       ? "Hide password"
@@ -207,7 +207,7 @@ function AdminLogin() {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 accent-[#785900]"
+                  className="w-4 h-4 accent-[#7C3AED]"
                 />
 
                 <span className="text-sm text-gray-600">
@@ -222,7 +222,7 @@ function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-14 bg-[#785900] text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-[#5d4400] transition disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full h-14 bg-[#7C3AED] text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-[#5B21B6] transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
 
               {loading ? (
@@ -245,9 +245,9 @@ function AdminLogin() {
 
           <Link
             to="/"
-            className="text-sm text-gray-500 hover:text-[#785900] transition"
+            className="text-sm text-gray-500 hover:text-[#7C3AED] transition"
           >
-            ← Back to DELI EGGS website
+            ← Back to Nomiani Skincare website
           </Link>
 
         </div>
@@ -259,3 +259,4 @@ function AdminLogin() {
 }
 
 export default AdminLogin;
+

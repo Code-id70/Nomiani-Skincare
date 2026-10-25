@@ -123,7 +123,7 @@ function AdminCustomers() {
         </h1>
 
         <p className="text-gray-500 mt-2">
-          Manage and view your DELI EGGS customers.
+          Manage and view your Nomiani Skincare customers.
         </p>
 
       </div>
@@ -183,7 +183,7 @@ function AdminCustomers() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search customers..."
-            className="w-full h-11 pl-10 pr-4 bg-[#FFF8F2] border border-[#D4C5AB] rounded-lg outline-none text-sm focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10"
+            className="w-full h-11 pl-10 pr-4 bg-[#FFF8F2] border border-[#D4C5AB] rounded-lg outline-none text-sm focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
           />
 
         </div>
@@ -256,7 +256,7 @@ function AdminCustomers() {
 
                       <div className="flex items-center gap-3">
 
-                        <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-xs font-bold">
+                        <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center text-xs font-bold">
                           {initials}
                         </div>
 
@@ -326,7 +326,7 @@ function AdminCustomers() {
 
                     <td className="px-4 py-4">
 
-                      <span className="font-semibold text-[#785900]">
+                      <span className="font-semibold text-[#7C3AED]">
                         R{customer.spent.toLocaleString()}
                       </span>
 
@@ -349,14 +349,14 @@ function AdminCustomers() {
                         <button
                           type="button"
                           title="View Customer"
-                          className="p-2 rounded-md text-gray-500 hover:text-[#785900] hover:bg-[#F3EDE7] transition"
+                          className="p-2 rounded-md text-gray-500 hover:text-[#7C3AED] hover:bg-[#F3EDE7] transition"
                         >
                           <Eye size={18} />
                         </button>
 
                         <button
                           type="button"
-                          className="p-2 rounded-md text-gray-500 hover:text-[#785900] hover:bg-[#F3EDE7] transition"
+                          className="p-2 rounded-md text-gray-500 hover:text-[#7C3AED] hover:bg-[#F3EDE7] transition"
                         >
                           <MoreVertical size={18} />
                         </button>
@@ -419,7 +419,7 @@ function AdminCustomers() {
 
               <div className="flex items-start gap-3">
 
-                <div className="w-12 h-12 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-sm font-bold">
+                <div className="w-12 h-12 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center text-sm font-bold">
                   {initials}
                 </div>
 
@@ -496,7 +496,7 @@ function AdminCustomers() {
                     Total Spent
                   </p>
 
-                  <p className="font-bold text-[#785900] mt-1">
+                  <p className="font-bold text-[#7C3AED] mt-1">
                     R{customer.spent.toLocaleString()}
                   </p>
 
@@ -507,7 +507,7 @@ function AdminCustomers() {
 
               <button
                 type="button"
-                className="w-full mt-4 py-2.5 rounded-lg bg-[#FFF8F2] text-[#785900] font-semibold text-sm hover:bg-[#F3EDE7] transition"
+                className="w-full mt-4 py-2.5 rounded-lg bg-[#FFF8F2] text-[#7C3AED] font-semibold text-sm hover:bg-[#F3EDE7] transition"
               >
                 View Customer
               </button>
@@ -543,7 +543,7 @@ function AdminCustomers() {
 
             <button
               type="button"
-              className="px-4 py-2 rounded-lg bg-[#785900] text-white text-sm font-semibold"
+              className="px-4 py-2 rounded-lg bg-[#7C3AED] text-white text-sm font-semibold"
             >
               1
             </button>
@@ -597,7 +597,7 @@ function CustomerStat({
 
         </div>
 
-        <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center">
           <Icon size={19} />
         </div>
 
@@ -608,3 +608,4 @@ function CustomerStat({
 }
 
 export default AdminCustomers;
+

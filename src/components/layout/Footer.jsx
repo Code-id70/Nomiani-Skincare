@@ -1,23 +1,100 @@
-function Footer() {
+import { Flower2, MessageCircle, Phone } from "lucide-react";
+
+export default function Footer() {
   return (
-    <footer className="bg-stone-900 text-white mt-20">
-      <div className="max-w-7xl mx-auto px-6 py-10">
-
-        <h2 className="text-2xl font-bold">
-          DELI EGGS
-        </h2>
-
-        <p className="mt-3 text-gray-300">
-          Farm-fresh produce delivered with care.
+    <footer className="px-4 pt-10 pb-12 bg-surface-container text-on-surface flex flex-col">
+      <div className="flex flex-col items-center text-center mb-6">
+        <div className="flex items-center gap-2 mb-1">
+          <Flower2 className="text-primary text-[24px]" />
+          <span className="font-headline font-headline-sm text-headline-sm text-primary font-bold">
+            Nomiani Skincare
+          </span>
+        </div>
+        <p className="font-body-sm text-body-sm text-on-surface-variant max-w-xs">
+          Nourish your skin with earth-born botanicals.
         </p>
+      </div>
 
-        <p className="mt-8 text-sm text-gray-400">
-          © {new Date().getFullYear()} DELI EGGS. All rights reserved.
+      <div className="w-full mb-8">
+        <a
+          href="https://wa.me/27825553829"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full h-12 rounded-full bg-[#25D366] text-white font-label-lg text-label-lg font-medium flex items-center justify-center gap-2 shadow-sm hover:brightness-105 active:scale-[0.99] transition-all"
+        >
+          <MessageCircle className="text-[20px]" />
+          <span>Chat with Us on WhatsApp</span>
+        </a>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 pb-6 mb-6">
+        <div className="flex flex-col gap-2">
+          <span className="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">
+            Store
+          </span>
+          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
+            Shop Botanicals
+          </a>
+          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
+            Body &amp; Glow
+          </a>
+          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
+            Ritual Gift Sets
+          </a>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">
+            Information
+          </span>
+          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
+            About Us
+          </a>
+          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
+            How to Order
+          </a>
+          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
+            Contact &amp; FAQ
+          </a>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2 p-4 rounded-xl bg-surface-container-high/60 mb-6 text-center">
+        <p className="font-label-sm text-[11px] text-on-surface-variant font-medium">
+          Nomiani Skincare (Pty) Ltd 
         </p>
+        <p className="font-body-sm text-[12px] text-on-surface-variant leading-snug">
+          Studio 4, The Old Biscuit Mill, Woodstock, Cape Town, 7925
+        </p>
+        <div className="flex items-center justify-center gap-3 pt-1">
+          <a className="font-body-sm text-[12px] text-primary hover:underline" href="mailto:hello@haloskin.co.za">
+            help@nomianiskincare.co.za
+          </a>
+          <span className="text-on-surface-variant">&bull;</span>
+          <span className="font-body-sm text-[12px] text-on-surface-variant">
+            <Phone className="inline w-[12px] h-[12px] mr-1" /> +27 68 068 8642
+          </span>
+        </div>
+      </div>
 
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 mb-6 text-center">
+        <a className="font-label-sm text-[11px] text-on-surface-variant hover:text-primary">
+          Return &amp; Refund Policy
+        </a>
+        <span className="text-on-surface-variant/40">&bull;</span>
+        <a className="font-label-sm text-[11px] text-on-surface-variant hover:text-primary">
+          Terms of Service
+        </a>
+        <span className="text-on-surface-variant/40">&bull;</span>
+        <a className="font-label-sm text-[11px] text-on-surface-variant hover:text-primary">
+          Privacy Policy (POPIA)
+        </a>
+      </div>
+
+      <div className="text-center pt-2">
+        <p className="font-label-sm text-[11px] text-on-surface-variant opacity-80">
+          &copy; 2025 Nomiani Skincare Botanicals. All rights reserved. Handcrafted in South Africa.
+        </p>
       </div>
     </footer>
   );
 }
-
-export default Footer;

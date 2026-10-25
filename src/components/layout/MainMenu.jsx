@@ -25,3 +25,4 @@ function MainLayout({ children, heroImage }) {
 }
 
 export default MainLayout;
+

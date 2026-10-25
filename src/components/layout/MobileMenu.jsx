@@ -30,13 +30,13 @@ function MobileMenu({ isOpen, onClose }) {
                   <Link to="/" className="flex items-center">
                     <img
                       src={logo}
-                      alt="DELI EGGS"
+                      alt="Nomiani Skincare"
                       className="h-20 w-auto"
                     />
                   </Link>
           
           <button onClick={onClose}>
-            <X className="text-[#785900]" />
+            <X className="text-[#7C3AED]" />
           </button>
 
         </div>
@@ -47,7 +47,7 @@ function MobileMenu({ isOpen, onClose }) {
           <Link
             to="/"
             onClick={onClose}
-            className="flex items-center gap-3 px-6 py-4 hover:bg-amber-50 transition"
+            className="flex items-center gap-3 px-6 py-4 hover:bg-violet-50 transition"
           >
             <Home size={20} />
             Home
@@ -56,7 +56,7 @@ function MobileMenu({ isOpen, onClose }) {
           <Link
             to="/shop"
             onClick={onClose}
-            className="flex items-center gap-3 px-6 py-4 hover:bg-amber-50 transition"
+            className="flex items-center gap-3 px-6 py-4 hover:bg-violet-50 transition"
           >
             <ShoppingBag size={20} />
             Shop
@@ -65,7 +65,7 @@ function MobileMenu({ isOpen, onClose }) {
           <Link
             to="/about"
             onClick={onClose}
-            className="flex items-center gap-3 px-6 py-4 hover:bg-amber-50 transition"
+            className="flex items-center gap-3 px-6 py-4 hover:bg-violet-50 transition"
           >
             <Info size={20} />
             About
@@ -74,7 +74,7 @@ function MobileMenu({ isOpen, onClose }) {
           <Link
             to="/contact"
             onClick={onClose}
-            className="flex items-center gap-3 px-6 py-4 hover:bg-amber-50 transition"
+            className="flex items-center gap-3 px-6 py-4 hover:bg-violet-50 transition"
           >
             <Phone size={20} />
             Contact
@@ -83,7 +83,7 @@ function MobileMenu({ isOpen, onClose }) {
           <Link
             to="/cart"
             onClick={onClose}
-            className="flex items-center justify-between px-6 py-4 hover:bg-amber-50 transition"
+            className="flex items-center justify-between px-6 py-4 hover:bg-violet-50 transition"
           >
             <div className="flex items-center gap-3">
               <ShoppingBasket size={20} />
@@ -91,7 +91,7 @@ function MobileMenu({ isOpen, onClose }) {
             </div>
 
             {cartCount > 0 && (
-              <span className="bg-[#785900] text-white text-xs px-2 py-1 rounded-full">
+              <span className="bg-[#7C3AED] text-white text-xs px-2 py-1 rounded-full">
                 {cartCount}
               </span>
             )}
@@ -103,7 +103,7 @@ function MobileMenu({ isOpen, onClose }) {
         <div className="absolute bottom-0 left-0 right-0 border-t p-6">
 
           <p className="text-sm text-gray-500">
-            Where your breakfast starts.
+            Clean skincare for every skin type.
           </p>
 
         </div>
@@ -114,3 +114,4 @@ function MobileMenu({ isOpen, onClose }) {
 }
 
 export default MobileMenu;
+

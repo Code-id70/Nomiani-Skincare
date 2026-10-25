@@ -109,7 +109,7 @@ function AdminOrders() {
         </h1>
 
         <p className="text-gray-500 mt-2">
-          Manage and track all DELI EGGS orders.
+          Manage and track all Nomiani Skincare orders.
         </p>
 
       </div>
@@ -194,7 +194,7 @@ function AdminOrders() {
                 placeholder="Search orders..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full sm:w-64 h-10 pl-10 pr-4 rounded-lg border border-[#D4C5AB] bg-[#FFF8F2] outline-none focus:border-[#785900] focus:ring-2 focus:ring-[#785900]/10 text-sm"
+                className="w-full sm:w-64 h-10 pl-10 pr-4 rounded-lg border border-[#D4C5AB] bg-[#FFF8F2] outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10 text-sm"
               />
 
             </div>
@@ -203,7 +203,7 @@ function AdminOrders() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="h-10 px-3 rounded-lg border border-[#D4C5AB] bg-white text-sm outline-none focus:border-[#785900]"
+              className="h-10 px-3 rounded-lg border border-[#D4C5AB] bg-white text-sm outline-none focus:border-[#7C3AED]"
             >
               <option value="All">Status: All</option>
               <option value="Pending">Pending</option>
@@ -217,7 +217,7 @@ function AdminOrders() {
             <select
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="h-10 px-3 rounded-lg border border-[#D4C5AB] bg-white text-sm outline-none focus:border-[#785900]"
+              className="h-10 px-3 rounded-lg border border-[#D4C5AB] bg-white text-sm outline-none focus:border-[#7C3AED]"
             >
               <option>Last 30 Days</option>
               <option>Today</option>
@@ -230,7 +230,7 @@ function AdminOrders() {
           {/* Export */}
           <button
             type="button"
-            className="h-10 px-4 rounded-lg text-[#785900] font-semibold text-sm hover:bg-[#FFF8F2] transition flex items-center justify-center gap-2"
+            className="h-10 px-4 rounded-lg text-[#7C3AED] font-semibold text-sm hover:bg-[#FFF8F2] transition flex items-center justify-center gap-2"
           >
             <Download size={18} />
             Export CSV
@@ -304,7 +304,7 @@ function AdminOrders() {
                     >
 
                       {/* Order ID */}
-                      <td className="px-4 py-4 font-bold text-[#785900]">
+                      <td className="px-4 py-4 font-bold text-[#7C3AED]">
                         {order.id}
                       </td>
 
@@ -313,7 +313,7 @@ function AdminOrders() {
 
                         <div className="flex items-center gap-3">
 
-                          <div className="w-9 h-9 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-xs font-bold">
+                          <div className="w-9 h-9 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center text-xs font-bold">
                             {order.initials}
                           </div>
 
@@ -371,7 +371,7 @@ function AdminOrders() {
 
                         <button
                           type="button"
-                          className="p-2 rounded-lg text-gray-400 hover:text-[#785900] hover:bg-[#FFF0C7] transition"
+                          className="p-2 rounded-lg text-gray-400 hover:text-[#7C3AED] hover:bg-[#FFF0C7] transition"
                         >
                           <MoreVertical size={19} />
                         </button>
@@ -427,7 +427,7 @@ function AdminOrders() {
 
             <button
               type="button"
-              className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#785900] text-white text-sm font-semibold"
+              className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#7C3AED] text-white text-sm font-semibold"
             >
               1
             </button>
@@ -480,9 +480,9 @@ function OrderStatCard({
   type,
 }) {
   const iconStyles = {
-    success: "bg-[#F3EDE7] text-[#785900]",
-    warning: "bg-[#FFF0C7] text-[#785900]",
-    primary: "bg-[#FFDF9E] text-[#785900]",
+    success: "bg-[#F3EDE7] text-[#7C3AED]",
+    warning: "bg-[#FFF0C7] text-[#7C3AED]",
+    primary: "bg-[#FFDF9E] text-[#7C3AED]",
   };
 
   return (
@@ -581,3 +581,5 @@ function StatusBadge({ status }) {
 }
 
 export default AdminOrders;
+
+

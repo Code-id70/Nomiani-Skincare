@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 
-import MainMenu from "../components/layout/MainMenu";
 import products from "../data/products";
 import { useCart } from "../context/CartContext";
 
@@ -16,25 +15,22 @@ function ProductDetails() {
 
   const { addToCart } = useCart();
 
-  if (!product) {
-    return (
-      <MainMenu>
+    if (!product) {
+      return (
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h1 className="text-4xl font-bold">
             Product not found.
           </h1>
         </div>
-      </MainMenu>
-    );
-  }
+      );
+    }
 
   return (
-    <MainMenu>
-      <div className="max-w-7xl mx-auto px-6 py-20">
+    <div className="max-w-7xl mx-auto px-6 py-20">
 
         <Link
           to="/shop"
-          className="text-[#785900] font-semibold hover:underline"
+          className="text-[#7C3AED] font-semibold hover:underline"
         >
           ← Back to Shop
         </Link>
@@ -69,7 +65,15 @@ function ProductDetails() {
               </p>
 
               <p>
-                <strong>Tray Size:</strong> {product.quantityPerTray} Eggs
+                <strong>Volume:</strong> {product.volumeMl} ml
+              </p>
+
+              <p>
+                <strong>Skin Type:</strong> {product.skinType}
+              </p>
+
+              <p>
+                <strong>Skin Concern:</strong> {product.skinConcern}
               </p>
 
               <p>
@@ -87,7 +91,7 @@ function ProductDetails() {
 
             </div>
 
-            <h2 className="text-4xl font-bold text-[#785900] mt-10">
+            <h2 className="text-4xl font-bold text-[#7C3AED] mt-10">
               R {product.price}
             </h2>
 
@@ -123,7 +127,7 @@ function ProductDetails() {
               onClick={() => addToCart(product, quantity)}
               className={`mt-10 w-full py-4 rounded-xl text-white font-semibold transition ${
                 product.inStock
-                  ? "bg-[#785900] hover:bg-[#5d4400]"
+                  ? "bg-[#7C3AED] hover:bg-[#5B21B6]"
                   : "bg-gray-300 cursor-not-allowed"
               }`}
             >
@@ -137,8 +141,8 @@ function ProductDetails() {
         </div>
 
       </div>
-    </MainMenu>
   );
 }
 
 export default ProductDetails;
+

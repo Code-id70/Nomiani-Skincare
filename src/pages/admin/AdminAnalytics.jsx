@@ -85,7 +85,7 @@ function AdminAnalytics() {
             name: "Processing",
             count: deliveryCount,
             percentage: totalOrders > 0 ? Math.round((deliveryCount / totalOrders) * 100) : 0,
-            className: "bg-amber-500",
+            className: "bg-violet-500",
           },
           {
             name: "Pending",
@@ -141,7 +141,7 @@ function AdminAnalytics() {
           </h1>
 
           <p className="text-gray-500 mt-2">
-            Track DELI EGGS performance, sales and customer activity.
+            Track Nomiani Skincare performance, sales and customer activity.
           </p>
 
         </div>
@@ -293,7 +293,7 @@ function AdminAnalytics() {
                     <div className="relative w-full flex-1 flex items-end justify-center">
 
                       <div
-                        className="w-full max-w-[52px] bg-[#785900] rounded-t-lg hover:bg-[#5B4200] transition-all cursor-pointer group relative"
+                        className="w-full max-w-[52px] bg-[#7C3AED] rounded-t-lg hover:bg-[#4C1D95] transition-all cursor-pointer group relative"
                         style={{
                           height: `${height}%`,
                         }}
@@ -350,7 +350,7 @@ function AdminAnalytics() {
 
             <Package
               size={21}
-              className="text-[#785900]"
+              className="text-[#7C3AED]"
             />
 
           </div>
@@ -379,7 +379,7 @@ function AdminAnalytics() {
 
                         <div className="flex items-center gap-3">
 
-                          <div className="w-8 h-8 rounded-lg bg-[#F3E6C5] text-[#785900] flex items-center justify-center text-sm font-bold">
+                          <div className="w-8 h-8 rounded-lg bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center text-sm font-bold">
                             {index + 1}
                           </div>
 
@@ -397,7 +397,7 @@ function AdminAnalytics() {
 
                         </div>
 
-                        <span className="font-semibold text-[#785900] text-sm">
+                        <span className="font-semibold text-[#7C3AED] text-sm">
                           R{product.revenue.toLocaleString()}
                         </span>
 
@@ -407,7 +407,7 @@ function AdminAnalytics() {
                       <div className="h-2 bg-[#F3EDE7] rounded-full overflow-hidden">
 
                         <div
-                          className="h-full bg-[#785900] rounded-full transition-all"
+                          className="h-full bg-[#7C3AED] rounded-full transition-all"
                           style={{
                             width: `${percentage}%`,
                           }}
@@ -447,7 +447,7 @@ function AdminAnalytics() {
 
             <ShoppingBag
               size={21}
-              className="text-[#785900]"
+              className="text-[#7C3AED]"
             />
 
           </div>
@@ -603,7 +603,7 @@ function AdminAnalytics() {
                         {product.units}
                       </td>
 
-                      <td className="px-5 py-4 font-semibold text-[#785900]">
+                      <td className="px-5 py-4 font-semibold text-[#7C3AED]">
                         R{product.revenue.toLocaleString()}
                       </td>
 
@@ -688,7 +688,7 @@ function AnalyticsStat({
         </div>
 
 
-        <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#785900] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full bg-[#F3E6C5] text-[#7C3AED] flex items-center justify-center">
 
           <Icon size={19} />
 
@@ -701,3 +701,5 @@ function AnalyticsStat({
 }
 
 export default AdminAnalytics;
+
+

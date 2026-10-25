@@ -12,7 +12,7 @@ function FeaturedProducts() {
 
           <div>
 
-            <span className="uppercase text-[#785900] font-semibold tracking-widest">
+            <span className="uppercase text-[#7C3AED] font-semibold tracking-widest">
               Featured Products
             </span>
 
@@ -20,14 +20,14 @@ function FeaturedProducts() {
               className="text-3xl font-bold mt-2"
               style={{ fontFamily: "Montserrat" }}
             >
-              Fresh From The Farm
+              Skincare Essentials
             </h2>
 
           </div>
 
           <Link
             to="/shop"
-            className="hidden md:block text-[#785900] font-semibold hover:underline"
+            className="hidden md:block text-[#7C3AED] font-semibold hover:underline"
           >
             View All
           </Link>
@@ -54,3 +54,4 @@ function FeaturedProducts() {
 }
 
 export default FeaturedProducts;
+

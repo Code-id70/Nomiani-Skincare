@@ -1,18 +1,15 @@
-import MainLayout from "../components/layout/MainMenu";
-import Hero from "../components/home/Hero";
-import FeaturedProducts from "../components/home/FeaturedProducts";
-import HowItWorks from "../components/home/HowItWorks";
-import CTA from "../components/home/CTA";
+import HeroSection from "../components/home/HeroSection";
+import ProductGrid from "../components/home/ProductGrid";
+import HowToOrder from "../components/home/HowToOrder";
+import CTABanner from "../components/home/CTABanner";
 
-function Home() {
+export default function Home() {
   return (
-    <MainLayout heroImage="/background-cover.jpg">
-      <Hero />
-       <FeaturedProducts />
-        <HowItWorks />
-         <CTA />
-    </MainLayout>
+    <main className="flex-grow pb-32">
+      <HeroSection />
+      <ProductGrid />
+      <HowToOrder />
+      <CTABanner />
+    </main>
   );
 }
-
-export default Home;

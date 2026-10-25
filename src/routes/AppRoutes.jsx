@@ -7,6 +7,7 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
+
 import PaymentMethod from "../pages/PaymentMethod";
 import Payment from "../pages/Payment";
 import OrderConfirmation from "../pages/OrderConfirmation";
@@ -19,13 +20,12 @@ import AdminCustomers from "../pages/admin/AdminCustomers";
 import AdminAnalytics from "../pages/admin/AdminAnalytics";
 import AdminSettings from "../pages/admin/AdminSettings";
 
-
-// Admin
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminLayout from "../components/admin/AdminLayout";
 import ProtectedRoute from "../components/admin/ProtectedRoute";
 import ScrollToTop from "../components/layout/ScrollToTop";
+import DefaultLayout from "../components/layout/DefaultLayout";
 
 function AppRoutes() {
   return (
@@ -34,26 +34,24 @@ function AppRoutes() {
       <Routes>
 
         {/* =========================
-            CUSTOMER WEBSITE
+            CUSTOMER WEBSITE (shared layout: Navbar + Footer + BottomNav)
         ========================== */}
+        <Route element={<DefaultLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:slug" element={<ProductDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Route>
 
-        <Route path="/" element={<Home />} />
+        <Route element={<DefaultLayout showFooter={false} />}>
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Route>
 
-        <Route path="/shop" element={<Shop />} />
-
-        <Route
-          path="/product/:slug"
-          element={<ProductDetails />}
-        />
-
-        <Route path="/cart" element={<Cart />} />
-
-        <Route path="/checkout" element={<Checkout />} />
-
-        <Route path="/about" element={<About />} />
-
-        <Route path="/contact" element={<Contact />} />
-
+        {/* =========================
+            PAYMENT / CHECKOUT FLOW (custom headers, BottomNav added per page)
+        ========================== */}
         <Route path="/payment-method" element={<PaymentMethod />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
@@ -63,7 +61,6 @@ function AppRoutes() {
         {/* =========================
             ADMIN
         ========================== */}
-
         <Route
           path="/admin/login"
           element={<AdminLogin />}

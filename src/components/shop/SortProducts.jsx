@@ -18,7 +18,7 @@ function SortProducts({ sortBy, setSortBy }) {
           py-2
           outline-none
           transition
-          focus:border-[#785900]
+          focus:border-[#7C3AED]
           focus:ring-2
           focus:ring-amber-200
           text-gray-700
@@ -35,3 +35,5 @@ function SortProducts({ sortBy, setSortBy }) {
 }
 
 export default SortProducts;
+
+

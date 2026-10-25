@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { CheckCircle2, Loader2, ArrowRight } from "lucide-react";
 import { apiRequest } from "../services/api";
+import BottomNav from "../components/layout/BottomNav";
 
 function PaymentSuccess() {
   const [searchParams] = useSearchParams();
@@ -102,12 +103,13 @@ function PaymentSuccess() {
   const total = parseFloat(orderData?.total || 0);
 
   return (
+    <>
     <div className="min-h-screen bg-[#EFE4D4] flex items-start justify-center py-16 px-4">
       <div className="w-full max-w-md">
 
         {status === "verifying" && (
           <div className="bg-white border border-[#D4C5AB] rounded-3xl p-8 shadow-sm text-center">
-            <Loader2 size={40} className="mx-auto text-[#785900] animate-spin mb-4" />
+            <Loader2 size={40} className="mx-auto text-[#7C3AED] animate-spin mb-4" />
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Verifying Payment</h1>
             <p className="text-gray-600">Please wait while we confirm your payment...</p>
           </div>
@@ -120,13 +122,13 @@ function PaymentSuccess() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 to="/checkout"
-                className="flex-1 text-center bg-[#785900] text-white py-3 rounded-xl font-semibold hover:bg-[#5f4700] transition"
+                className="flex-1 text-center bg-[#7C3AED] text-white py-3 rounded-xl font-semibold hover:bg-[#5B21B6] transition"
               >
                 Try Again
               </Link>
               <Link
                 to="/"
-                className="flex-1 text-center border border-[#D4C5AB] bg-white text-gray-700 py-3 rounded-xl font-semibold hover:bg-amber-50 transition"
+                className="flex-1 text-center border border-[#D4C5AB] bg-white text-gray-700 py-3 rounded-xl font-semibold hover:bg-violet-50 transition"
               >
                 Back to Home
               </Link>
@@ -165,28 +167,28 @@ function PaymentSuccess() {
                     className="text-2xl tracking-widest font-bold text-[#201B11]"
                     style={{ fontFamily: "Montserrat" }}
                   >
-                    DELI EGGS
+                    Nomiani Skincare
                   </h1>
                   <p className="text-xs text-gray-500 mt-1">
-                    Where your breakfast starts
+                    Clean skincare for every skin type
                   </p>
 
                   {/* Address block */}
                   <div className="text-[11px] text-gray-500 mt-3 leading-relaxed">
-                    <p>123 Church Street, Hatfield</p>
-                    <p>Pretoria, Gauteng, 0028</p>
+                    <p>123 Main Street</p>
+                    <p>Mamelodi East</p>
+                    <p>Pretoria, Gauteng, 0122</p>
                     <p>Tel: 012 345 6789</p>
-                    <p>VAT No: 4123456789</p>
                   </div>
                 </div>
 
-                <div className="border-t border-dashed border-[#785900]/40 my-5" />
+                <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
 
                 {/* Meta */}
                 <div className="text-xs text-gray-600 space-y-1">
                   <div className="flex justify-between">
                     <span>Order #</span>
-                    <span className="font-bold text-[#785900]">{orderData?.order_number}</span>
+                    <span className="font-bold text-[#7C3AED]">{orderData?.order_number}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Date</span>
@@ -202,7 +204,7 @@ function PaymentSuccess() {
                   </div>
                 </div>
 
-                <div className="border-t border-dashed border-[#785900]/40 my-5" />
+                <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
 
                 {/* Items */}
                 <div className="space-y-3">
@@ -221,7 +223,7 @@ function PaymentSuccess() {
                   ))}
                 </div>
 
-                <div className="border-t border-dashed border-[#785900]/40 my-5" />
+                <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
 
                 {/* Totals */}
                 <div className="space-y-2 text-sm">
@@ -235,20 +237,20 @@ function PaymentSuccess() {
                   </div>
                 </div>
 
-                <div className="border-t border-dashed border-[#785900]/40 my-5" />
+                <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
 
                 <div className="flex justify-between items-baseline">
                   <span className="font-bold text-lg text-[#201B11]">TOTAL</span>
-                  <span className="font-bold text-2xl text-[#785900]">
+                  <span className="font-bold text-2xl text-[#7C3AED]">
                     R {total.toFixed(2)}
                   </span>
                 </div>
 
-                <div className="border-t border-dashed border-[#785900]/40 my-5" />
+                <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
 
                 {/* Tap to continue */}
                 <div className="text-center">
-                  <p className="text-sm text-[#785900] font-semibold tracking-wide animate-pulse">
+                  <p className="text-sm text-[#7C3AED] font-semibold tracking-wide animate-pulse">
                     TAP RECEIPT TO CONTINUE <ArrowRight size={14} className="inline ml-1" />
                   </p>
                 </div>
@@ -271,13 +273,13 @@ function PaymentSuccess() {
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Link
                 to="/shop"
-                className="flex-1 text-center bg-[#785900] text-white py-3 rounded-xl font-semibold hover:bg-[#5f4700] transition"
+                className="flex-1 text-center bg-[#7C3AED] text-white py-3 rounded-xl font-semibold hover:bg-[#5B21B6] transition"
               >
                 Continue Shopping
               </Link>
               <Link
                 to="/"
-                className="flex-1 text-center border border-[#D4C5AB] bg-white text-gray-700 py-3 rounded-xl font-semibold hover:bg-amber-50 transition"
+                className="flex-1 text-center border border-[#D4C5AB] bg-white text-gray-700 py-3 rounded-xl font-semibold hover:bg-violet-50 transition"
               >
                 Back to Home
               </Link>
@@ -287,7 +289,11 @@ function PaymentSuccess() {
 
       </div>
     </div>
+    <BottomNav />
+    </>
   );
 }
 
 export default PaymentSuccess;
+
+

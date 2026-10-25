@@ -27,7 +27,7 @@ function ProductCard({ product }) {
         </p>
 
         <div className="mt-6 flex items-center justify-between">
-          <span className="text-3xl font-bold text-[#785900]">
+          <span className="text-3xl font-bold text-[#7C3AED]">
             R {product.price}
           </span>
 
@@ -45,7 +45,7 @@ function ProductCard({ product }) {
         <div className="flex gap-3 mt-6">
           <Link
             to={`/product/${product.slug}`}
-            className="flex-1 text-center border border-[#785900] text-[#785900] py-3 rounded-xl font-medium hover:bg-[#785900] hover:text-white transition"
+            className="flex-1 text-center border border-[#7C3AED] text-[#7C3AED] py-3 rounded-xl font-medium hover:bg-[#7C3AED] hover:text-white transition"
           >
             View Details
           </Link>
@@ -53,7 +53,7 @@ function ProductCard({ product }) {
           {product.inStock ? (
             <button
               onClick={() => addToCart(product)}
-              className="flex-1 bg-[#785900] text-white rounded-xl py-3 hover:bg-[#5d4400] transition flex items-center justify-center gap-2"
+              className="flex-1 bg-[#7C3AED] text-white rounded-xl py-3 hover:bg-[#5B21B6] transition flex items-center justify-center gap-2"
             >
               <ShoppingCart size={18} />
               Add
@@ -74,3 +74,4 @@ function ProductCard({ product }) {
 }
 
 export default ProductCard;
+

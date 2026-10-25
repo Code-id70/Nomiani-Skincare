@@ -1,6 +1,6 @@
 function CustomerForm({ formData, handleChange, errors = {} }) {
   const inputClass = (field) =>
-    `w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900] ${
+    `w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] ${
       errors[field] ? "border-red-500" : ""
     }`;
 
@@ -81,7 +81,7 @@ function CustomerForm({ formData, handleChange, errors = {} }) {
             value={formData.email}
             onChange={handleChange}
             placeholder="Canly@email.com"
-            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#785900]"
+            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
           />
         </div>
 
@@ -92,3 +92,4 @@ function CustomerForm({ formData, handleChange, errors = {} }) {
 }
 
 export default CustomerForm;
+

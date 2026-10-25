@@ -7,7 +7,7 @@ import {
   TrendingUp,
   ArrowUpRight,
   AlertTriangle,
-  Egg,
+  Sparkles,
   MoreVertical,
   CalendarDays,
   RefreshCw,
@@ -140,7 +140,7 @@ function AdminDashboard() {
           </h1>
 
           <p className="text-gray-500 mt-2">
-            Here's what's happening with DELI EGGS today.
+            Here's what's happening with Nomiani Skincare today.
           </p>
         </div>
 
@@ -208,7 +208,7 @@ function AdminDashboard() {
 
                   <div className="flex items-start justify-between mb-5">
 
-                    <div className="w-11 h-11 rounded-xl bg-[#FDC003]/20 text-[#785900] flex items-center justify-center">
+                    <div className="w-11 h-11 rounded-xl bg-[#FDC003]/20 text-[#7C3AED] flex items-center justify-center">
                       <Icon size={21} />
                     </div>
 
@@ -258,7 +258,7 @@ function AdminDashboard() {
 
             <button
               type="button"
-              className="text-sm font-semibold text-[#785900] hover:underline flex items-center gap-1"
+              className="text-sm font-semibold text-[#7C3AED] hover:underline flex items-center gap-1"
             >
               View all
               <ArrowUpRight size={16} />
@@ -292,7 +292,7 @@ function AdminDashboard() {
                     className="border-b border-[#D4C5AB]/40 hover:bg-[#FFF8F2] transition"
                   >
 
-                    <td className="p-4 font-semibold text-[#785900]">
+                    <td className="p-4 font-semibold text-[#7C3AED]">
                       {order.id}
                     </td>
 
@@ -322,7 +322,7 @@ function AdminDashboard() {
 
                       <button
                         type="button"
-                        className="p-2 rounded-lg text-gray-400 hover:text-[#785900] hover:bg-amber-50"
+                        className="p-2 rounded-lg text-gray-400 hover:text-[#7C3AED] hover:bg-violet-50"
                       >
                         <MoreVertical size={18} />
                       </button>
@@ -352,7 +352,7 @@ function AdminDashboard() {
                 <div className="flex justify-between items-start">
 
                   <div>
-                    <p className="font-semibold text-[#785900]">
+                    <p className="font-semibold text-[#7C3AED]">
                       {order.id}
                     </p>
 
@@ -424,8 +424,8 @@ function AdminDashboard() {
 
                 <div className="flex items-center gap-3">
 
-                  <div className="w-11 h-11 rounded-xl bg-[#FFF8F2] text-[#785900] flex items-center justify-center">
-                    <Egg size={21} />
+                  <div className="w-11 h-11 rounded-xl bg-[#FFF8F2] text-[#7C3AED] flex items-center justify-center">
+                    <Sparkles size={21} />
                   </div>
 
                   <div>
@@ -467,7 +467,7 @@ function AdminDashboard() {
 function StatusBadge({ status }) {
   const styles = {
     Pending:
-      "bg-amber-100 text-amber-800",
+      "bg-violet-100 text-amber-800",
 
     Confirmed:
       "bg-blue-100 text-blue-700",
@@ -494,3 +494,5 @@ function StatusBadge({ status }) {
 }
 
 export default AdminDashboard;
+
+
