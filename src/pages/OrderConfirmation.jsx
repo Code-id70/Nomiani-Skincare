@@ -27,13 +27,13 @@ function OrderConfirmation() {
 
   return (
     <>
-      <div className="min-h-screen bg-[#EFE4D4] flex items-start justify-center py-16 px-4">
+      <div className="min-h-screen bg-surface-container flex items-start justify-center py-16 px-4">
       <div className="w-full max-w-md font-mono">
 
         {/* Success icon above the slip */}
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-            <CheckCircle2 size={34} className="text-green-600" />
+          <div className="w-16 h-16 bg-secondary-container rounded-full flex items-center justify-center">
+            <CheckCircle2 size={34} className="text-on-secondary-container" />
           </div>
         </div>
 
@@ -62,12 +62,12 @@ function OrderConfirmation() {
               >
                 Nomiani Skincare
               </h1>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-on-surface-variant mt-1">
                 Clean skincare for every skin type
               </p>
 
               {/* Address block */}
-              <div className="text-[11px] text-gray-500 mt-3 leading-relaxed">
+              <div className="text-[11px] text-on-surface-variant mt-3 leading-relaxed">
                 <p>123 Main Street</p>
                 <p>Mamelodi East</p>
                 <p>Pretoria, Gauteng, 0122</p>
@@ -75,13 +75,13 @@ function OrderConfirmation() {
               </div>
             </div>
 
-            <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
+            <div className="border-t border-dashed border-outline-variant/40 my-5" />
 
             {/* Meta */}
-            <div className="text-xs text-gray-600 space-y-1">
+            <div className="text-xs text-on-surface-variant space-y-1">
               <div className="flex justify-between">
                 <span>Order #</span>
-                <span className="font-bold text-[#7C3AED]">{orderNumber}</span>
+                <span className="font-bold text-primary">{orderNumber}</span>
               </div>
               <div className="flex justify-between">
                 <span>Date</span>
@@ -93,11 +93,11 @@ function OrderConfirmation() {
               </div>
               <div className="flex justify-between">
                 <span>Status</span>
-                <span className="text-green-700 font-semibold">CONFIRMED</span>
+                <span className="text-secondary font-semibold">CONFIRMED</span>
               </div>
             </div>
 
-            <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
+            <div className="border-t border-dashed border-outline-variant/40 my-5" />
 
             {/* Items */}
             <div className="space-y-3">
@@ -109,44 +109,44 @@ function OrderConfirmation() {
                       R {(item.quantity * item.price).toFixed(2)}
                     </span>
                   </div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-on-surface-variant">
                     {item.quantity} x R {item.price}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
+            <div className="border-t border-dashed border-outline-variant/40 my-5" />
 
             {/* Totals */}
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-on-surface-variant">
                 <span>Subtotal</span>
                 <span>R {subtotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-on-surface-variant">
                 <span>Delivery</span>
                 <span>{deliveryFee === 0 ? "Free" : `R ${deliveryFee.toFixed(2)}`}</span>
               </div>
             </div>
 
-            <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
+            <div className="border-t border-dashed border-outline-variant/40 my-5" />
 
             <div className="flex justify-between items-baseline">
               <span className="font-bold text-lg text-[#201B11]">TOTAL</span>
-              <span className="font-bold text-2xl text-[#7C3AED]">
+              <span className="font-bold text-2xl text-primary">
                 R {total.toFixed(2)}
               </span>
             </div>
 
-            <div className="border-t border-dashed border-[#7C3AED]/40 my-5" />
+            <div className="border-t border-dashed border-outline-variant/40 my-5" />
 
             {/* Thank you + barcode */}
             <div className="text-center">
               <p className="text-sm text-[#201B11] tracking-wide">
                 THANK YOU FOR YOUR ORDER
               </p>
-              <p className="text-xs text-gray-500 mt-1">✨ See you again soon ✨</p>
+              <p className="text-xs text-on-surface-variant mt-1">✨ See you again soon ✨</p>
 
               {/* Fake barcode */}
               <div className="flex justify-center gap-[2px] mt-5 h-10">
@@ -158,7 +158,7 @@ function OrderConfirmation() {
                   />
                 ))}
               </div>
-              <p className="text-[10px] tracking-[0.3em] text-gray-500 mt-1">
+              <p className="text-[10px] tracking-[0.3em] text-on-surface-variant mt-1">
                 {orderNumber}
               </p>
             </div>
@@ -182,13 +182,13 @@ function OrderConfirmation() {
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Link
             to="/shop"
-            className="flex-1 text-center bg-[#7C3AED] text-white py-3 rounded-xl font-semibold hover:bg-[#5B21B6] transition"
+            className="flex-1 text-center bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary/90 transition"
           >
             Continue Shopping
           </Link>
           <Link
             to="/"
-            className="flex-1 text-center border border-[#D4C5AB] bg-white text-gray-700 py-3 rounded-xl font-semibold hover:bg-violet-50 transition"
+            className="flex-1 text-center border border-outline-variant bg-white text-on-surface-variant py-3 rounded-xl font-semibold hover:bg-surface-container-high transition"
           >
             Back to Home
           </Link>

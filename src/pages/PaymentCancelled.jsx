@@ -5,22 +5,22 @@ import BottomNav from "../components/layout/BottomNav";
 function PaymentCancelled() {
   return (
     <>
-    <div className="min-h-screen bg-[#EFE4D4] flex items-start justify-center py-16 px-4">
-      <div className="w-full max-w-md bg-white border border-[#D4C5AB] rounded-3xl p-8 shadow-sm text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment Cancelled</h1>
-        <p className="text-gray-600 mb-6">
+    <div className="min-h-screen bg-surface-container flex items-start justify-center py-16 px-4">
+      <div className="w-full max-w-md bg-white border border-outline-variant rounded-3xl p-8 shadow-sm text-center">
+        <h1 className="text-2xl font-bold text-on-surface mb-2">Payment Cancelled</h1>
+        <p className="text-on-surface-variant mb-6">
           You cancelled the payment. Your order has not been placed yet.
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
             to="/checkout"
-            className="flex-1 text-center bg-[#7C3AED] text-white py-3 rounded-xl font-semibold hover:bg-[#5B21B6] transition"
+            className="flex-1 text-center bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary/90 transition"
           >
             Try Again
           </Link>
           <Link
             to="/"
-            className="flex-1 text-center border border-[#D4C5AB] bg-white text-gray-700 py-3 rounded-xl font-semibold hover:bg-violet-50 transition"
+            className="flex-1 text-center border border-outline-variant bg-white text-on-surface-variant py-3 rounded-xl font-semibold hover:bg-surface-container-high transition"
           >
             Back to Home
           </Link>

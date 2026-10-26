@@ -177,20 +177,20 @@ items: items.map((item) => ({
 
   return (
     <>
-    <div className="min-h-screen bg-[#FFF8F2]">
+    <div className="min-h-screen bg-surface">
 
       {/* Header */}
-      <header className="border-b border-[#D4C5AB] bg-white">
+      <header className="border-b border-outline-variant bg-surface-container-lowest">
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
           <Link
             to="/payment-method"
-            className="flex items-center gap-2 text-gray-600 hover:text-[#7C3AED] transition"
+            className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition"
           >
             <ArrowLeft size={20} />
             Change Payment Method
           </Link>
 
-          <span className="font-semibold text-[#7C3AED]">
+          <span className="font-semibold text-primary">
             Nomiani Skincare
           </span>
         </div>
@@ -203,40 +203,40 @@ items: items.map((item) => ({
           {/* Heading */}
           <div className="text-center mb-8">
 
-            <span className="inline-block bg-violet-100 text-[#7C3AED] px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span className="inline-block bg-primary-container text-on-primary-container px-4 py-2 rounded-full text-sm font-semibold mb-4">
               {paymentNames[paymentMethod] || paymentMethod}
             </span>
 
             <h1
-              className="text-4xl font-bold text-gray-900"
+              className="text-4xl font-bold text-on-surface"
               style={{ fontFamily: "Montserrat" }}
             >
               Complete Payment
             </h1>
 
-            <p className="mt-3 text-gray-600">
+            <p className="mt-3 text-on-surface-variant">
               Complete your payment to place your Nomiani Skincare order.
             </p>
 
           </div>
 
           {/* Payment Card */}
-          <div className="bg-white border border-[#D4C5AB] rounded-3xl p-6 md:p-8 shadow-sm">
+          <div className="bg-surface-container-lowest border border-outline-variant rounded-3xl p-6 md:p-8 shadow-sm">
 
             {/* Total */}
-            <div className="bg-[#FFF8F2] rounded-2xl p-5 mb-7 flex justify-between items-center">
-              <span className="text-gray-600">
+            <div className="bg-surface rounded-2xl p-5 mb-7 flex justify-between items-center">
+              <span className="text-on-surface-variant">
                 Amount to pay
               </span>
 
-              <span className="text-2xl font-bold text-[#7C3AED]">
+              <span className="text-2xl font-bold text-primary">
                 R {Number(total).toFixed(2)}
               </span>
             </div>
 
             {paymentMethod === "card" && (
               <div className="space-y-5">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-on-surface-variant">
                   Click the button below to securely enter your card details via Yoco. You will be redirected to Yoco&apos;s secure payment page.
                 </p>
 
@@ -249,7 +249,7 @@ items: items.map((item) => ({
             )}
 
             {paymentMethod === "eft" && (
-              <div className="bg-violet-50 rounded-2xl p-6">
+              <div className="bg-surface-container-low rounded-2xl p-6">
 
                 <h3 className="font-bold text-lg mb-4">
                   Bank Transfer Details
@@ -279,9 +279,9 @@ items: items.map((item) => ({
 
                 </div>
 
-                <p className="text-sm text-gray-600 mt-5">
-                  Please use your order reference when making the payment.
-                </p>
+                  <p className="text-sm text-on-surface-variant mt-5">
+                    Please use your order reference when making the payment.
+                  </p>
 
                 {error && (
                   <p className="text-sm text-red-600 bg-red-50 p-3 rounded-xl mt-4">
@@ -295,13 +295,13 @@ items: items.map((item) => ({
 
 
             {paymentMethod === "collection" && (
-              <div className="text-center bg-violet-50 rounded-2xl p-8">
+              <div className="text-center bg-surface-container-low rounded-2xl p-8">
 
                 <h3 className="font-bold text-lg">
                   Pay on Collection
                 </h3>
 
-                <p className="text-gray-600 text-sm mt-2">
+                <p className="text-on-surface-variant text-sm mt-2">
                   Your order will be prepared for collection.
                   Payment will be made when you collect your order.
                 </p>
@@ -321,11 +321,7 @@ items: items.map((item) => ({
                 <button
                   onClick={handlePay}
                   disabled={processing}
-                  className="w-full flex items-center justify-center gap-2 px-5 py-4 rounded-xl font-semibold text-white text-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: "linear-gradient(180deg, #7C3AED 0%, #7C3AED 60%, #5B21B6 100%)",
-                    boxShadow: "0 3px 0 #312E81, 0 4px 8px rgba(0,0,0,0.25)",
-                  }}
+                  className="w-full flex items-center justify-center gap-2 px-5 py-4 rounded-xl font-semibold text-white text-lg transition disabled:opacity-50 disabled:cursor-not-allowed bg-primary shadow-md hover:bg-primary/90"
                 >
                   {processing ? (
                     <>
@@ -342,11 +338,7 @@ items: items.map((item) => ({
                 <button
                   onClick={handlePlaceOrder}
                   disabled={processing}
-                  className="w-full flex items-center justify-center gap-2 px-5 py-4 rounded-xl font-semibold text-white text-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: "linear-gradient(180deg, #7C3AED 0%, #7C3AED 60%, #5B21B6 100%)",
-                    boxShadow: "0 3px 0 #312E81, 0 4px 8px rgba(0,0,0,0.25)",
-                  }}
+                  className="w-full flex items-center justify-center gap-2 px-5 py-4 rounded-xl font-semibold text-white text-lg transition disabled:opacity-50 disabled:cursor-not-allowed bg-primary shadow-md hover:bg-primary/90"
                 >
                   {processing ? (
                     <>
@@ -392,7 +384,7 @@ items: items.map((item) => ({
                   type="button"
                   onClick={printerStatus === "done" && createdOrder ? handlePayment : undefined}
                   disabled={!(printerStatus === "done" && createdOrder)}
-                  className={`w-full text-left bg-white shadow-lg px-5 pt-6 pb-4 font-mono border border-[#D4C5AB] ${
+                  className={`w-full text-left bg-surface-container-lowest shadow-lg px-5 pt-6 pb-4 font-mono border border-outline-variant ${
                     printerStatus === "done" && createdOrder ? "pay-paper-ready cursor-pointer hover:shadow-xl transition" : ""
                   }`}
                 >
@@ -403,12 +395,12 @@ items: items.map((item) => ({
                     <p className="text-[10px] text-gray-500 mt-1">Clean skincare for every skin type</p>
                   </div>
 
-                  <div className="border-t border-dashed border-[#7C3AED]/40 my-3" />
+                  <div className="border-t border-dashed border-outline-variant/40 my-3" />
 
-                  <div className="text-[10px] text-gray-600 space-y-1">
+                  <div className="text-[10px] text-on-surface-variant space-y-1">
                     <div className="flex justify-between">
                       <span>Order #</span>
-                      <span className="font-bold text-[#7C3AED]">{createdOrder?.order_number}</span>
+                      <span className="font-bold text-primary">{createdOrder?.order_number}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Date</span>
@@ -416,7 +408,7 @@ items: items.map((item) => ({
                     </div>
                   </div>
 
-                  <div className="border-t border-dashed border-[#7C3AED]/40 my-3" />
+                  <div className="border-t border-dashed border-outline-variant/40 my-3" />
 
                   <div className="space-y-1.5">
                     {items.map((item) => (
@@ -427,15 +419,15 @@ items: items.map((item) => ({
                     ))}
                   </div>
 
-                  <div className="border-t border-dashed border-[#7C3AED]/40 my-3" />
+                  <div className="border-t border-dashed border-outline-variant/40 my-3" />
 
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-sm text-[#201B11]">TOTAL</span>
-                    <span className="font-bold text-lg text-[#7C3AED]">R {total.toFixed(2)}</span>
+                    <span className="font-bold text-lg text-primary">R {total.toFixed(2)}</span>
                   </div>
 
                   {printerStatus === "done" && createdOrder && (
-                    <p className="text-center text-[10px] text-[#7C3AED] font-semibold tracking-wide mt-4 animate-pulse">
+                    <p className="text-center text-[10px] text-primary font-semibold tracking-wide mt-4 animate-pulse">
                       TAP TO CONTINUE →
                     </p>
                   )}
@@ -444,10 +436,10 @@ items: items.map((item) => ({
 
               {/* POS machine, brand colored */}
               <div className="w-[260px] -mt-1 relative z-10">
-                <div className="rounded-t-2xl rounded-b-xl px-5 pt-4 pb-5 shadow-lg border border-[#D4C5AB] bg-[#FFF8F2]">
+                <div className="rounded-t-2xl rounded-b-xl px-5 pt-4 pb-5 shadow-lg border border-outline-variant bg-surface">
 
                   <div className="text-center mb-3">
-                    <span className="text-[9px] tracking-[0.3em] text-[#7C3AED] font-mono font-semibold">
+                    <span className="text-[9px] tracking-[0.3em] text-primary font-mono font-semibold">
                       Nomiani Skincare · POS-100
                     </span>
                   </div>
@@ -488,11 +480,7 @@ items: items.map((item) => ({
                     <button
                       onClick={handlePrint}
                       disabled={printerStatus === "printing" || !createdOrder}
-                      className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white text-sm transition disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{
-                        background: "linear-gradient(180deg, #7C3AED 0%, #7C3AED 60%, #5B21B6 100%)",
-                        boxShadow: "0 3px 0 #312E81, 0 4px 8px rgba(0,0,0,0.25)",
-                      }}
+                      className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white text-sm transition disabled:opacity-50 disabled:cursor-not-allowed bg-primary shadow-md hover:bg-primary/90"
                     >
                       <Printer size={15} />
                       {printerStatus === "printing" ? "Printing..." : "Print Receipt"}
@@ -500,11 +488,7 @@ items: items.map((item) => ({
 
                     <button
                       onClick={handleReset}
-                      className="flex items-center justify-center w-11 h-11 rounded-xl text-[#7C3AED] transition hover:bg-[#EFE4D4]"
-                      style={{
-                        background: "#F2E9DA",
-                        boxShadow: "0 3px 0 #D4C5AB, 0 4px 8px rgba(0,0,0,0.1)",
-                      }}
+                      className="flex items-center justify-center w-11 h-11 rounded-xl text-primary transition hover:bg-surface-container-high bg-surface-container-low shadow-sm"
                       aria-label="Reset printer"
                     >
                       <RotateCcw size={15} />
@@ -515,7 +499,7 @@ items: items.map((item) => ({
             </div>
 
             {/* Security */}
-            <div className="flex items-center justify-center gap-2 mt-6 text-sm text-gray-500">
+            <div className="flex items-center justify-center gap-2 mt-6 text-sm text-on-surface-variant">
               <ShieldCheck size={18} className="text-green-600" />
               Your payment information is secure
             </div>
