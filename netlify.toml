@@ -12,5 +12,7 @@
 [context.deploy-preview.environment]
   VITE_API_URL = "http://localhost:8000"
 
-[context.branch-deploy.environment]
-  VITE_API_URL = "http://localhost:8000"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
