@@ -31,6 +31,7 @@ export async function apiRequest(endpoint, options = {}) {
     throw new Error(
       data.message ||
       data.detail ||
+      (typeof data === "object" ? JSON.stringify(data) : data) ||
       "Something went wrong. Please try again."
     );
   }
