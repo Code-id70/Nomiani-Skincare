@@ -43,7 +43,10 @@ function AdminLogin() {
 
       if (!response.ok) {
         throw new Error(
-          data.detail || data.message || "Invalid email or password."
+          (typeof data.detail === "string" && data.detail) ||
+          (typeof data.message === "string" && data.message) ||
+          JSON.stringify(data) ||
+          "Invalid email or password."
         );
       }
 

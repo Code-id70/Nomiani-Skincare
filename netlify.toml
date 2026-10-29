@@ -7,7 +7,7 @@
   SECRETS_SCAN_OMIT_KEYS = "VITE_API_URL"
 
 [context.production.environment]
-  VITE_API_URL = "https://nomiani-skincare.onrender.com"
+  VITE_API_URL = "https://deli-eggs.onrender.com"
 
 [context.deploy-preview.environment]
   VITE_API_URL = "http://localhost:8000"
