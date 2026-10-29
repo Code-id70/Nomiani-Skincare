@@ -29,7 +29,7 @@ const { items: contextItems } = useCart();
   const [error, setError] = useState(null);
   const [createdOrder, setCreatedOrder] = useState(null);
 
-  const [printerStatus, setPrinterStatus] = useState("idle");
+  const [showModal, setShowModal] = useState(false);
   const timers = useRef([]);
 
   const paymentNames = {
@@ -88,10 +88,11 @@ items: items.map((item) => ({
     setProcessing(true);
     setError(null);
     try {
-      const response = await createOrder(buildOrderPayload());
+const response = await createOrder(buildOrderPayload());
       setCreatedOrder(response.data);
       sessionStorage.removeItem("checkoutData");
       handlePrint();
+      setShowModal(true);
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -510,7 +511,46 @@ items: items.map((item) => ({
 
       </main>
     </div>
-    <BottomNav />
+    {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full mx-4">
+            <h2 className="text-xl font-bold mb-2">Your order is placed</h2>
+            <p className="text-gray-600 mb-4">Choose an option below.</p>
+            <div className="flex flex-col gap-3">
+              <button onClick={() => window.print()} className="w-full py-3 rounded-xl bg-[#91462f] text-white font-semibold">
+                Download the receipt
+              </button>
+              <button
+                onClick={() => {
+                  const order = createdOrder || {};
+                  const orderId = order.id || order.order_id || "";
+                  const customerName = `${customer?.firstName || ""} ${customer?.lastName || ""}`.trim();
+                  const deliveryAddress = deliveryMethod === "delivery"
+                    ? [customer?.street, customer?.suburb, customer?.city, customer?.postalCode].filter(Boolean).join(", ")
+                    : "Collection";
+                  const itemLines = items.map((i) => `${i.name} x${i.quantity} - R${i.price}`).join("\n");
+                  const message = [
+                    `Hi, my name is ${customerName}.`,
+                    `New order${orderId ? ` #${orderId}` : ""}:`,
+                    itemLines,
+                    `Total: R${total}`,
+                    `Delivery: ${deliveryAddress}`,
+                    orderId ? `Admin: ${window.location.origin}/admin/orders/${orderId}` : "",
+                  ].filter(Boolean).join("\n");
+                  window.open(`https://wa.me/27820850042?text=${encodeURIComponent(message)}`, "_blank");
+                }}
+                className="w-full py-3 rounded-xl border border-[#91462f] text-[#91462f] font-semibold"
+              >
+                Send order to WhatsApp
+              </button>
+              <button onClick={() => setShowModal(false)} className="w-full py-2 text-gray-500">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <BottomNav />
     </>
   );
 }

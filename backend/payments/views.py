@@ -120,7 +120,7 @@ def create_yoco_checkout(request):
     if not yoco_secret:
         return Response({'success': False, 'message': 'Yoco is not configured on the server.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    frontend_url = os.environ.get('FRONTEND_URL', 'https://deli-eggs.netlify.app')
+    frontend_url = os.environ.get('FRONTEND_URL', 'https://nomiani-skincare.netlify.app')
 
     amount_in_cents = int(float(order.total) * 100)
 
