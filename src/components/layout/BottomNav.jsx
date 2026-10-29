@@ -1,5 +1,6 @@
 import { Flower2, Store, ShoppingBag, UserCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const bottomLinks = [
   { label: "Discover", Icon: Flower2, to: "/", active: true },
