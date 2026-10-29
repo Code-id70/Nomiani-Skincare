@@ -5,19 +5,21 @@ import products from "../data/products";
 import { useCart } from "../context/CartContext";
 
 function ProductDetails() {
-  const { slug } = useParams();
+const { slug } = useParams();
 
-  const product = products.find(
-    (item) => item.slug === slug
-  );
+const product = products.find(
+  (item) => String(item.id) === slug
+);
 
   const [quantity, setQuantity] = useState(1);
+
+const inStock = product?.stock === "in_stock";
 
   const { addToCart } = useCart();
 
     if (!product) {
       return (
-        <div className="max-w-7xl mx-auto px-6 py-20">
+<div className="max-w-7xl mx-auto px-6 py-20 bg-[#FFF8F2] rounded-3xl">
           <h1 className="text-4xl font-bold">
             Product not found.
           </h1>
@@ -26,13 +28,13 @@ function ProductDetails() {
     }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-20">
+<div className="max-w-7xl mx-auto px-6 py-20 bg-[#FFF8F2] rounded-3xl">
 
         <Link
           to="/shop"
-          className="text-[#7C3AED] font-semibold hover:underline"
+          className="text-[#91462f] font-semibold hover:underline"
         >
-          ← Back to Shop
+          Back to Shop
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-16 mt-10">
@@ -65,7 +67,7 @@ function ProductDetails() {
               </p>
 
               <p>
-                <strong>Volume:</strong> {product.volumeMl} ml
+                <strong>Volume:</strong> {product.volume}
               </p>
 
               <p>
@@ -78,7 +80,7 @@ function ProductDetails() {
 
               <p>
                 <strong>Status:</strong>{" "}
-                {product.inStock ? (
+                {inStock ? (
                   <span className="text-green-600">
                     ✓ In Stock
                   </span>
@@ -91,7 +93,7 @@ function ProductDetails() {
 
             </div>
 
-            <h2 className="text-4xl font-bold text-[#7C3AED] mt-10">
+            <h2 className="text-4xl font-bold text-[#91462f] mt-10">
               R {product.price}
             </h2>
 
@@ -123,15 +125,15 @@ function ProductDetails() {
             </div>
 
             <button
-              disabled={!product.inStock}
+              disabled={!inStock}
               onClick={() => addToCart(product, quantity)}
               className={`mt-10 w-full py-4 rounded-xl text-white font-semibold transition ${
-                product.inStock
-                  ? "bg-[#7C3AED] hover:bg-[#5B21B6]"
+                inStock
+                  ? "bg-[#91462f] hover:bg-[#7a3a28]"
                   : "bg-gray-300 cursor-not-allowed"
               }`}
             >
-              {product.inStock
+              {inStock
                 ? "Add To Cart"
                 : "Out Of Stock"}
             </button>

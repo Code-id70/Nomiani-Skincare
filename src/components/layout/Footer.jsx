@@ -17,7 +17,7 @@ export default function Footer() {
 
       <div className="w-full mb-8">
         <a
-          href="https://wa.me/27825553829"
+          href="https://wa.me/27680688642"
           target="_blank"
           rel="noopener noreferrer"
           className="w-full h-12 rounded-full bg-[#25D366] text-white font-label-lg text-label-lg font-medium flex items-center justify-center gap-2 shadow-sm hover:brightness-105 active:scale-[0.99] transition-all"
@@ -25,37 +25,6 @@ export default function Footer() {
           <MessageCircle className="text-[20px]" />
           <span>Chat with Us on WhatsApp</span>
         </a>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 pb-6 mb-6">
-        <div className="flex flex-col gap-2">
-          <span className="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">
-            Store
-          </span>
-          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
-            Shop Botanicals
-          </a>
-          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
-            Body &amp; Glow
-          </a>
-          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
-            Ritual Gift Sets
-          </a>
-        </div>
-        <div className="flex flex-col gap-2">
-          <span className="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">
-            Information
-          </span>
-          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
-            About Us
-          </a>
-          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
-            How to Order
-          </a>
-          <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary">
-            Contact &amp; FAQ
-          </a>
-        </div>
       </div>
 
       <div className="flex flex-col gap-2 p-4 rounded-xl bg-surface-container-high/60 mb-6 text-center">

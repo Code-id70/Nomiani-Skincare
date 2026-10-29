@@ -44,7 +44,7 @@ function ProductCard({ product }) {
 
         <div className="flex gap-3 mt-6">
           <Link
-            to={`/product/${product.slug}`}
+            to={`/product/${product.id}`}
             className="flex-1 text-center border border-[#7C3AED] text-[#7C3AED] py-3 rounded-xl font-medium hover:bg-[#7C3AED] hover:text-white transition"
           >
             View Details

@@ -17,7 +17,7 @@ export default function CTABanner() {
         </p>
         <Link
           to="/shop"
-          className="h-12 px-8 rounded-full bg-surface-container-lowest text-primary font-label-lg text-label-lg shadow-sm hover:bg-surface-container-low transition-colors active:scale-95"
+          className="h-12 px-8 rounded-full bg-surface-container-lowest text-primary font-label-lg text-label-lg shadow-sm hover:bg-surface-container-low transition-colors active:scale-95 flex items-center justify-center"
         >
           Shop Now
         </Link>

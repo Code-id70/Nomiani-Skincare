@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -102,15 +103,21 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # CORS
-CORS_ALLOWED_ORIGINS = os.environ.get(
+_cors_origins = os.environ.get(
     'CORS_ALLOWED_ORIGINS',
     'http://localhost:5173,http://localhost:3000'
 ).split(',')
+if 'https://nomiani-skincare.netlify.app' not in _cors_origins:
+    _cors_origins.append('https://nomiani-skincare.netlify.app')
+CORS_ALLOWED_ORIGINS = _cors_origins
 
-CSRF_TRUSTED_ORIGINS = os.environ.get(
+_csrf_origins = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'http://localhost:5173,http://localhost:3000'
 ).split(',')
+if 'https://nomiani-skincare.netlify.app' not in _csrf_origins:
+    _csrf_origins.append('https://nomiani-skincare.netlify.app')
+CSRF_TRUSTED_ORIGINS = _csrf_origins
 
 # REST Framework
 REST_FRAMEWORK = {

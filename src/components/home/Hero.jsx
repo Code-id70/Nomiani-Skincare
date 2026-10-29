@@ -35,11 +35,11 @@ export default function Hero() {
         </div>
 
         <div className="mt-10 flex justify-center gap-4 w-full">
-          <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-surface-container-low shadow-sm">
+          <div className="flex flex-col items-center justify-center p-3 rounded-xl">
             <span className="text-[20px] text-accent mb-1">local_florist</span>
             <span className="font-label-sm text-accent font-medium text-center">100% Clean</span>
           </div>
-          <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-surface-container-low shadow-sm">
+          <div className="flex flex-col items-center justify-center p-3 rounded-xl">
             <span className="text-[20px] text-accent mb-1">local_shipping</span>
             <span className="font-label-sm text-accent font-medium text-center">SA Delivery</span>
           </div>

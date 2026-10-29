@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <main className="flex-grow pt-16 px-4">
+    <main className="flex-grow pt-24 px-4">
       <div className="max-w-3xl mx-auto">
         <h1 className="font-headline-lg text-4xl text-on-surface mb-8">About Nomiani Skincare</h1>
         <p className="font-body-lg text-lg text-on-surface-variant mb-6 leading-relaxed">

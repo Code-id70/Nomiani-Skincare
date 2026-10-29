@@ -73,7 +73,7 @@ export default function HeroSection() {
             return (
               <div
                 key={badge.label}
-                className="flex flex-col items-center justify-center p-2.5 shadow-sm"
+                className="flex flex-col items-center justify-center p-2.5"
               >
                 <Icon className="text-[20px] text-secondary mb-1" />
                 <span className="font-sans text-label-sm text-on-surface font-medium text-center">

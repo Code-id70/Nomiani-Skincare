@@ -14,7 +14,7 @@ export default function Contact() {
               <span className="font-semibold">Email:</span> hello@haloskin.co.za
             </p>
             <p className="font-body-sm text-sm text-on-surface mb-2">
-              <span className="font-semibold">Phone:</span> +27 (0)82 555 3829
+              <span className="font-semibold">Phone:</span> +27 68 068 8642
             </p>
             <p className="font-body-sm text-sm text-on-surface">
               <span className="font-semibold">Studio:</span> Woodstock, Cape Town, 7925
