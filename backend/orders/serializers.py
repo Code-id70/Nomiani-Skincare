@@ -33,7 +33,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class OrderCreateSerializer(serializers.Serializer):
     customer_first_name = serializers.CharField()
     customer_last_name = serializers.CharField()
-    customer_email = serializers.EmailField()
+    customer_email = serializers.EmailField(required=False, allow_blank=True)
     customer_phone = serializers.CharField(required=False, allow_blank=True)
     customer_address = serializers.CharField(required=False, allow_blank=True)
     order_type = serializers.ChoiceField(choices=Order.ORDER_TYPE_CHOICES, default='COLLECTION')
