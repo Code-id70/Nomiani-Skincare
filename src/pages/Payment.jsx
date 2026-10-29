@@ -29,7 +29,8 @@ const { items: contextItems } = useCart();
   const [error, setError] = useState(null);
   const [createdOrder, setCreatedOrder] = useState(null);
 
-  const [showModal, setShowModal] = useState(false);
+  const [printerStatus, setPrinterStatus] = useState("idle");
+const [showModal, setShowModal] = useState(false);
   const timers = useRef([]);
 
   const paymentNames = {
