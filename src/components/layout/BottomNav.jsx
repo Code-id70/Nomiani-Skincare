@@ -1,5 +1,5 @@
 import { Flower2, Store, ShoppingBag, UserCircle } from "lucide-react";
-import { useCart } from "../../context/CartContext";
+import { Link } from "react-router-dom";
 
 const bottomLinks = [
   { label: "Discover", Icon: Flower2, to: "/", active: true },
@@ -19,9 +19,9 @@ export default function BottomNav() {
           const active = link.active;
 
           return (
-            <a
+            <Link
               key={link.label}
-              href={link.to}
+              to={link.to}
               onClick={(e) => {
                 if (link.label === "Account") {
                   e.preventDefault();
@@ -44,7 +44,7 @@ export default function BottomNav() {
               >
                 {link.label}
               </span>
-            </a>
+            </Link>
           );
         })}
       </div>

@@ -25,18 +25,18 @@ export async function apiRequest(endpoint, options = {}) {
     headers,
   });
 
+  const text = await response.text();
   let data = null;
   try {
-    data = await response.json();
+    data = text ? JSON.parse(text) : null;
   } catch {
-    const text = await response.text();
     throw new Error(text.slice(0, 200) || "Request failed");
   }
 
   if (!response.ok) {
     throw new Error(
-      data.message ||
-      data.detail ||
+      data?.message ||
+      data?.detail ||
       (typeof data === "object" ? JSON.stringify(data) : data) ||
       "Something went wrong. Please try again."
     );
