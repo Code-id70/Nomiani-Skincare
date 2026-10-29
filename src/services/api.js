@@ -25,7 +25,13 @@ export async function apiRequest(endpoint, options = {}) {
     headers,
   });
 
-  const data = await response.json();
+  let data = null;
+  try {
+    data = await response.json();
+  } catch {
+    const text = await response.text();
+    throw new Error(text.slice(0, 200) || "Request failed");
+  }
 
   if (!response.ok) {
     throw new Error(
